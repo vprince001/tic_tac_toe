@@ -2,14 +2,16 @@ const headerLib = require('./src/headerLib.js');
 const {selectHeader} = headerLib;
 
 const library = require('./src/library.js')
-const {createBoard} = library;
-const {readGameModeInput} = library;
+const {createBoard}        = library;
+const {readGameModeInput}  = library;
 const {callReadPlayerName} = library;
-const {readFirstSymbol} = library;
-const {assignSymbols} = library;
-const {selectGameMode} = library;
+const {readFirstSymbol}    = library;
+const {assignSymbols}      = library;
+const {selectGameMode}     = library;
+const {declareDraw}        = library;
 
 const main = function() {
+
   let header = selectHeader();
   console.log(header);
 
@@ -30,6 +32,8 @@ const main = function() {
   data.executeSelectedMode = selectGameMode(data.modeNumber);
   data = data.executeSelectedMode(data, header);
 
-}
+  declareDraw(data.board, header);
+
+};
 
 main();

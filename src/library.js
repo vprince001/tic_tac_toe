@@ -221,9 +221,16 @@ const startDoublePlayerGame = function(data, header) {
   return data;
 };
 
+const declareDraw = function(board, header) {
+  updateBoard(header, board);
+  console.log("IT'S A DRAW.");
+  return true;
+};
+
 exports.createBoard = createBoard;
 exports.readGameModeInput = readGameModeInput;
 exports.callReadPlayerName = callReadPlayerName;
 exports.readFirstSymbol = readFirstSymbol;
 exports.assignSymbols = assignSymbols;
 exports.selectGameMode = selectGameMode;
+exports.declareDraw = declareDraw;
