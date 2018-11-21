@@ -63,6 +63,31 @@ const readDoublePlayersName = function() {
   return names;
 };
 
+const readFirstSymbol = function(firstName) {
+  let msgForSymbol = "Choose your symbol either 'x' or 'o' : ";
+  let msgForInvalidSymbol = "Valid symbols are 'x' or 'o'. Please choose one from these only : "
+  
+  let firstSymbol = readline.question("\n"+firstName+", "+msgForSymbol);
+  
+  while(firstSymbol != "x" && firstSymbol != "o") {
+     firstSymbol = readline.question("\n"+firstName+", "+msgForInvalidSymbol);
+  }
+  return firstSymbol;
+};
+
+const assignSymbols = function(firstSymbol) {
+  let symbols = {};
+  symbols.firstSymbol = color("red",firstSymbol);
+  symbols.secondSymbol = color("yellow", "x");
+
+  if(symbols.firstSymbol == color("red", "x")) {
+    symbols.secondSymbol = color("yellow", "o");
+  }
+  return symbols;
+};
+
 exports.createBoard = createBoard;
 exports.readGameModeInput = readGameModeInput;
 exports.callReadPlayerName = callReadPlayerName;
+exports.readFirstSymbol = readFirstSymbol;
+exports.assignSymbols = assignSymbols;

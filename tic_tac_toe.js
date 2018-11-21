@@ -5,6 +5,8 @@ const library = require('./src/library.js')
 const {createBoard} = library;
 const {readGameModeInput} = library;
 const {callReadPlayerName} = library;
+const {readFirstSymbol} = library;
+const {assignSymbols} = library;
 
 const main = function() {
   let header = selectHeader();
@@ -17,7 +19,10 @@ const main = function() {
   data.modeNumber = readGameModeInput();
 
   data.names = callReadPlayerName(data.modeNumber);
-  console.log(data.names);
+
+  let firstSymbol = readFirstSymbol(data.names.firstName);
+  data.symbols = assignSymbols(firstSymbol);
+  console.log(data.symbols);
 }
 
 main();
