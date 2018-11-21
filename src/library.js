@@ -86,8 +86,144 @@ const assignSymbols = function(firstSymbol) {
   return symbols;
 };
 
+const selectGameMode = function(modeNumber) {
+  let selectedMode = startSinglePlayerGame;
+  if(modeNumber == 2) {
+      selectedMode = startDoublePlayerGame;
+  }
+  return selectedMode;
+};
+
+const startSinglePlayerGame = function(data, header) {
+
+  for(let currentMove = 1; currentMove < 10; currentMove++) {
+    let currentPlayer = selectCurrentPlayer(data.names, data.symbols, currentMove);
+    let name = currentPlayer.name;
+    let symbol = currentPlayer.symbol;
+    currentPlayer.executeMove(header, data, name, symbol);
+  }
+  return data;
+};
+
+const selectCurrentPlayer = function(names, symbols, currentMove) {
+  let currentPlayer = {}
+  currentPlayer.name = names.firstName;
+  currentPlayer.symbol = symbols.firstSymbol;
+  currentPlayer.executeMove = executePlayerMove;
+
+  if(isEven(currentMove)) {
+    currentPlayer.name = names.secondName;
+    currentPlayer.symbol = symbols.secondSymbol;
+    currentPlayer.executeMove = executeBotMove;
+  }
+  return currentPlayer;
+};
+
+const executePlayerMove = function(header, data, name, symbol) {
+  updateBoard(header, data.board);
+  input = +readPlayerInput(name, symbol);
+  let isBlockFree = checkBlockStatus(input, data.boardData, data.symbols);
+  
+  while(!isBlockFree) {
+    console.log("Sorry, this block is already occupied. Please try again.");
+    input = +readPlayerInput(name, symbol);
+    isBlockFree = checkBlockStatus(input, data.boardData, data.symbols);
+  }
+  
+  insertSymbol(data, name, symbol, input);
+  let isWon = checkWin(data[name]);
+  if(isWon) { declareWinner(name, data.board, header) };
+};
+
+const updateBoard = function(header, board) {
+  console.clear();
+  console.log(header);
+  console.log(board);
+};
+
+const readPlayerInput = function(name, symbol) {
+  let msgForInput = "Enter number between 1 to 9\n";
+  let msgForInvalidInput = "Entered data is not valid. Please enter number between 1 to 9 only.\n";
+  console.log("\nTurn of",color('blue',name),":",symbol);
+
+  let input = readline.questionInt(msgForInput);
+  while(input < 1 || input > 9) {
+    input = readline.questionInt(msgForInvalidInput);
+  }
+
+  return input;
+};
+
+const checkBlockStatus = function(input, boardData, symbols) {
+  let isBlockFree = true;
+
+  if(boardData[input] == symbols.firstSymbol || boardData[input] == symbols.secondSymbol) {
+    isBlockFree = false;
+  }
+  return isBlockFree;
+};
+
+const insertSymbol = function(data, name, symbol, input) {
+  data.boardData[input] = symbol;
+  data[name].push(input);
+  data.board = createBoard(data.boardData);
+};
+
+const checkWin = function(playerInputs) {
+  let winConditions = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]];
+  return winConditions.some(function(element) {
+    return isSubset(playerInputs, element)
+  })
+};
+
+const isSubset = function(superSet, subsetCandidate) {
+  return subsetCandidate.every(function(element) {
+    return superSet.includes(element);
+  })
+};
+
+const declareWinner = function(name, board, header) {
+  let hashLine = "#####################################"
+  updateBoard(header, board);
+  console.log(hashLine, name, "won the game !", hashLine);
+  process.exit();
+};
+
+const isEven = function(number) {
+  return number%2 == 0;
+};
+
+const executeBotMove = function(header, data, name, symbol) {
+  let input = +Math.ceil(Math.random()*9);
+  let isBlockFree = checkBlockStatus(input, data.boardData, data.symbols);
+
+  while(!isBlockFree) {
+    input = +Math.ceil(Math.random()*9);
+    isBlockFree = checkBlockStatus(input, data.boardData, data.symbols);
+  }
+
+  insertSymbol(data, name, symbol, input);
+  let isWon = checkWin(data[name]);
+  if(isWon) { declareWinner(name, data.board, header) };
+  
+  updateBoard(header, data.board);
+  readline.question(name+" input is "+input+". Press enter to continue.");
+};
+
+const startDoublePlayerGame = function(data, header) {
+
+  for(let currentMove = 1; currentMove < 10; currentMove++) {
+    let currentPlayer = selectCurrentPlayer(data.names, data.symbols, currentMove);
+    let name = currentPlayer.name;
+    let symbol = currentPlayer.symbol;
+    executePlayerMove(header, data, name, symbol);
+  }
+  return data;
+};
+
 exports.createBoard = createBoard;
 exports.readGameModeInput = readGameModeInput;
 exports.callReadPlayerName = callReadPlayerName;
 exports.readFirstSymbol = readFirstSymbol;
 exports.assignSymbols = assignSymbols;
+exports.selectGameMode = selectGameMode;

@@ -7,6 +7,7 @@ const {readGameModeInput} = library;
 const {callReadPlayerName} = library;
 const {readFirstSymbol} = library;
 const {assignSymbols} = library;
+const {selectGameMode} = library;
 
 const main = function() {
   let header = selectHeader();
@@ -22,7 +23,13 @@ const main = function() {
 
   let firstSymbol = readFirstSymbol(data.names.firstName);
   data.symbols = assignSymbols(firstSymbol);
-  console.log(data.symbols);
+
+  data[data.names.firstName] = [];
+  data[data.names.secondName] = [];
+
+  data.executeSelectedMode = selectGameMode(data.modeNumber);
+  data = data.executeSelectedMode(data, header);
+
 }
 
 main();
