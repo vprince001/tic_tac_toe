@@ -41,5 +41,28 @@ const readGameModeInput = function() {
   return modeNumber;
 };
 
+const callReadPlayerName = function(modeNumber) {
+  let retrieveNames = readDoublePlayersName;
+  if(modeNumber == 1) {
+    retrieveNames = readSinglePlayerName;
+  }
+  return retrieveNames();
+};
+
+const readSinglePlayerName = function() {
+  let names = {};
+  names.firstName = color("blue",readline.question("Please enter your name : "));
+  names.secondName = color("green","Computer");
+  return names;
+};
+
+const readDoublePlayersName = function() {
+  let names = {};
+  names.firstName = color("blue",readline.question("Please enter first player's name : "));
+  names.secondName = color("green",readline.question("Please enter second player's name : "));
+  return names;
+};
+
 exports.createBoard = createBoard;
 exports.readGameModeInput = readGameModeInput;
+exports.callReadPlayerName = callReadPlayerName;

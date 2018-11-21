@@ -4,6 +4,7 @@ const {selectHeader} = headerLib;
 const library = require('./src/library.js')
 const {createBoard} = library;
 const {readGameModeInput} = library;
+const {callReadPlayerName} = library;
 
 const main = function() {
   let header = selectHeader();
@@ -14,7 +15,9 @@ const main = function() {
   data.board = createBoard(data.boardData);
 
   data.modeNumber = readGameModeInput();
-  console.log(data.modeNumber);
+
+  data.names = callReadPlayerName(data.modeNumber);
+  console.log(data.names);
 }
 
 main();
