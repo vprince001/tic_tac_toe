@@ -41,17 +41,17 @@ const readGameModeInput = function() {
   let invalidInputMsg = "Only two modes are available. ";
   invalidInputMsg += "You can either choose 1 or 2.\n";
 
-  let modeNumber = +readline.questionInt(validInputMsg);
+  let modeNumber = readline.question(validInputMsg).toString();
 
-  while(modeNumber < 1 || modeNumber > 2) {
-    modeNumber = +readline.questionInt(invalidInputMsg);
+  while(modeNumber != '1' && modeNumber != '2') {
+    modeNumber = readline.question(invalidInputMsg);
   }
   return modeNumber;
 };
 
 const readPlayerName = function(modeNumber) {
   let retrieveNames = readDoublePlayersName;
-  if(modeNumber == 1) {
+  if(modeNumber == '1') {
     retrieveNames = readSinglePlayerName;
   }
   return retrieveNames();
