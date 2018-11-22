@@ -133,8 +133,8 @@ const executePlayerMove = function(header, data, name, symbol) {
   }
   
   insertSymbol(data, name, symbol, input);
-  let isWon = checkWin(data[name]);
-  if(isWon) { declareWinner(name, data.board, header) };
+  let hasWon = checkWin(data[name]);
+  if(hasWon) { declareWinner(name, data.board, header) };
 };
 
 const updateBoard = function(header, board) {
