@@ -7,8 +7,8 @@ const {readGameModeInput}  = library;
 const {readPlayerName} = library;
 const {readFirstSymbol}    = library;
 const {assignSymbols}      = library;
-const {selectGameMode}     = library;
-const {updateScreen}        = library;
+const {startGame}          = library;
+const {updateScreen}       = library;
 const {declareDraw}        = library;
 
 const main = function() {
@@ -29,8 +29,7 @@ const main = function() {
   data[data.names.firstName] = [];
   data[data.names.secondName] = [];
 
-  data.executeSelectedMode = selectGameMode(data.modeNumber);
-  data = data.executeSelectedMode(data, header);
+  data = startGame(data, header);
 
   updateScreen(header, data.board);
   declareDraw(data.board, header);

@@ -90,15 +90,7 @@ const assignSymbols = function(firstSymbol) {
   return symbols;
 };
 
-const selectGameMode = function(modeNumber) {
-  let selectedMode = startSinglePlayerGame;
-  if(modeNumber == 2) {
-      selectedMode = startDoublePlayerGame;
-  }
-  return selectedMode;
-};
-
-const startSinglePlayerGame = function(data, header) {
+const startGame = function(data, header) {
 
   for(let currentMove = 1; currentMove < 10; currentMove++) {
     let currentPlayer = selectCurrentPlayer(data.names, data.symbols, currentMove);
@@ -109,15 +101,29 @@ const startSinglePlayerGame = function(data, header) {
   return data;
 };
 
+const startDoublePlayerGame = function(data, header) {
+
+  for(let currentMove = 1; currentMove < 10; currentMove++) {
+    let currentPlayer = selectCurrentPlayer(data.names, data.symbols, currentMove);
+    let name = currentPlayer.name;
+    let symbol = currentPlayer.symbol;
+    executePlayerMove(header, data, name, symbol);
+  }
+  return data;
+};
+
 const selectCurrentPlayer = function(names, symbols, currentMove) {
   let currentPlayer = {}
   currentPlayer.name = names.firstName;
   currentPlayer.symbol = symbols.firstSymbol;
-  currentPlayer.executeMove = executePlayerMove;
 
   if(isEven(currentMove)) {
     currentPlayer.name = names.secondName;
     currentPlayer.symbol = symbols.secondSymbol;
+  }
+
+  currentPlayer.executeMove = executePlayerMove;
+  if(currentPlayer.name == color("green", "Computer")) {
     currentPlayer.executeMove = executeBotMove;
   }
   return currentPlayer;
@@ -210,17 +216,6 @@ const executeBotMove = function(header, data, name, symbol) {
   readline.question(name+" input is "+input+". Press enter to continue.");
 };
 
-const startDoublePlayerGame = function(data, header) {
-
-  for(let currentMove = 1; currentMove < 10; currentMove++) {
-    let currentPlayer = selectCurrentPlayer(data.names, data.symbols, currentMove);
-    let name = currentPlayer.name;
-    let symbol = currentPlayer.symbol;
-    executePlayerMove(header, data, name, symbol);
-  }
-  return data;
-};
-
 const declareDraw = function(board, header) {
   let hashLine = color("violet", repeatCharacter("#", 42));
   let drawMsg = color("green","IT'S A DRAW");
@@ -234,6 +229,6 @@ exports.readGameModeInput = readGameModeInput;
 exports.readPlayerName = readPlayerName;
 exports.readFirstSymbol = readFirstSymbol;
 exports.assignSymbols = assignSymbols;
-exports.selectGameMode = selectGameMode;
+exports.startGame = startGame;
 exports.updateScreen = updateScreen;
 exports.declareDraw = declareDraw;
