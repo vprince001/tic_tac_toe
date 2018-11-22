@@ -101,17 +101,6 @@ const startGame = function(data, header) {
   return data;
 };
 
-const startDoublePlayerGame = function(data, header) {
-
-  for(let currentMove = 1; currentMove < 10; currentMove++) {
-    let currentPlayer = selectCurrentPlayer(data.names, data.symbols, currentMove);
-    let name = currentPlayer.name;
-    let symbol = currentPlayer.symbol;
-    executePlayerMove(header, data, name, symbol);
-  }
-  return data;
-};
-
 const selectCurrentPlayer = function(names, symbols, currentMove) {
   let currentPlayer = {}
   currentPlayer.name = names.firstName;
@@ -139,7 +128,7 @@ const executePlayerMove = function(header, data, name, symbol) {
   }
   
   insertSymbol(data, name, symbol, input);
-  let hasWon = checkWin(data[name]);
+  let hasWon = checkWin(data.inputs[name]);
   if(hasWon) { declareWinner(name, data.board, header) };
 };
 
@@ -171,9 +160,16 @@ const isBlockFree = function(input, boardData, symbols) {
   return status;
 };
 
+const createInputArrays = function(names) {
+  let inputs = {};
+  inputs[names.firstName] = [];
+  inputs[names.secondName] = [];
+  return inputs;
+}
+
 const insertSymbol = function(data, name, symbol, input) {
   data.boardData[input] = symbol;
-  data[name].push(input);
+  data.inputs[name].push(input);
   data.board = createBoard(data.boardData);
 };
 
@@ -209,8 +205,8 @@ const executeBotMove = function(header, data, name, symbol) {
   }
 
   insertSymbol(data, name, symbol, input);
-  let isWon = checkWin(data[name]);
-  if(isWon) { declareWinner(name, data.board, header) };
+  let hasWon = checkWin(data.inputs[name]);
+  if(hasWon) { declareWinner(name, data.board, header) };
   
   updateScreen(header, data.board);
   readline.question(name+" input is "+input+". Press enter to continue.");
@@ -229,6 +225,7 @@ exports.readGameModeInput = readGameModeInput;
 exports.readPlayerName = readPlayerName;
 exports.readFirstSymbol = readFirstSymbol;
 exports.assignSymbols = assignSymbols;
+exports.createInputArrays = createInputArrays;
 exports.startGame = startGame;
 exports.updateScreen = updateScreen;
 exports.declareDraw = declareDraw;
