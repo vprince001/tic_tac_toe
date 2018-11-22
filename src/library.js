@@ -13,8 +13,8 @@ const color = function(selectedColor,text) {
   return colors[selectedColor] + text + colors.white;
 };
 
-const repeatCharacter = function(character, times) {
-  return new Array(times).fill(character).join("");
+const createBoardData = function() {
+  return new Array(10).fill(" ");
 };
 
 const createBoard = function (boardData){
@@ -30,6 +30,10 @@ const createBoard = function (boardData){
 
   let board = border + firstLine + border + secondLine + border + thirdLine + border;
   return board;
+};
+
+const repeatCharacter = function(character, times) {
+  return new Array(times).fill(character).join("");
 };
 
 const readGameModeInput = function() {
@@ -223,6 +227,6 @@ const declareDraw = function(board, header) {
   console.log(msg);
 };
 
-module.exports = {createBoard, readGameModeInput, readPlayerName,
-                  readFirstSymbol, assignSymbols, createInputArrays,
-                  startGame, updateScreen, declareDraw};
+module.exports = {createBoardData, createBoard, readGameModeInput,
+                  readPlayerName, readFirstSymbol, assignSymbols,
+                  createInputArrays, startGame, updateScreen, declareDraw};

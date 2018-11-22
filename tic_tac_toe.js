@@ -1,6 +1,6 @@
 const {selectHeader} = require('./src/headerLib.js');
 
-const {createBoard, readGameModeInput, readPlayerName,
+const {createBoardData, createBoard, readGameModeInput, readPlayerName,
        readFirstSymbol, assignSymbols, createInputArrays,
        startGame, updateScreen, declareDraw} = require('./src/library.js');
 
@@ -9,7 +9,7 @@ const main = function() {
   console.log(header);
 
   let data = {};
-  data.boardData = new Array(10).fill(" ");
+  data.boardData = createBoardData();
   data.board = createBoard(data.boardData);
 
   data.modeNumber = readGameModeInput();
