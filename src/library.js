@@ -124,7 +124,7 @@ const selectCurrentPlayer = function(names, symbols, currentMove) {
 };
 
 const executePlayerMove = function(header, data, name, symbol) {
-  updateBoard(header, data.board);
+  updateScreen(header, data.board);
   input = +readPlayerInput(name, symbol);
   
   while(!isBlockFree(input, data.boardData, data.symbols)) {
@@ -137,7 +137,7 @@ const executePlayerMove = function(header, data, name, symbol) {
   if(hasWon) { declareWinner(name, data.board, header) };
 };
 
-const updateBoard = function(header, board) {
+const updateScreen = function(header, board) {
   console.clear();
   console.log(header);
   console.log(board);
@@ -186,7 +186,7 @@ const isSubset = function(superSet, subsetCandidate) {
 
 const declareWinner = function(name, board, header) {
   let hashLine = repeatCharacter("#", 37);
-  updateBoard(header, board);
+  updateScreen(header, board);
   console.log(hashLine, name, "won the game !", hashLine);
   process.exit();
 };
@@ -206,7 +206,7 @@ const executeBotMove = function(header, data, name, symbol) {
   let isWon = checkWin(data[name]);
   if(isWon) { declareWinner(name, data.board, header) };
   
-  updateBoard(header, data.board);
+  updateScreen(header, data.board);
   readline.question(name+" input is "+input+". Press enter to continue.");
 };
 
@@ -235,5 +235,5 @@ exports.readPlayerName = readPlayerName;
 exports.readFirstSymbol = readFirstSymbol;
 exports.assignSymbols = assignSymbols;
 exports.selectGameMode = selectGameMode;
-exports.updateBoard = updateBoard;
+exports.updateScreen = updateScreen;
 exports.declareDraw = declareDraw;
