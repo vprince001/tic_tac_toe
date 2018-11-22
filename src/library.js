@@ -96,9 +96,9 @@ const startGame = function(data, header) {
     let currentPlayer = selectCurrentPlayer(data.names, data.symbols, currentMove);
     let name = currentPlayer.name;
     let symbol = currentPlayer.symbol;
-    currentPlayer.executeMove(header, data, name, symbol);
+    data.board = currentPlayer.executeMove(header, data, name, symbol);
   }
-  return data;
+  return data.board;
 };
 
 const selectCurrentPlayer = function(names, symbols, currentMove) {
@@ -130,6 +130,8 @@ const executePlayerMove = function(header, data, name, symbol) {
   insertSymbol(data, name, symbol, input);
   let hasWon = checkWin(data.inputs[name]);
   if(hasWon) { declareWinner(name, data.board, header) };
+
+  return data.board;
 };
 
 const updateScreen = function(header, board) {
@@ -210,6 +212,7 @@ const executeBotMove = function(header, data, name, symbol) {
   
   updateScreen(header, data.board);
   readline.question(name+" input is "+input+". Press enter to continue.");
+  return data.board;
 };
 
 const declareDraw = function(board, header) {

@@ -7,7 +7,7 @@ const {readGameModeInput}  = library;
 const {readPlayerName}     = library;
 const {readFirstSymbol}    = library;
 const {assignSymbols}      = library;
-const {createInputArrays} = library;
+const {createInputArrays}  = library;
 const {startGame}          = library;
 const {updateScreen}       = library;
 const {declareDraw}        = library;
@@ -30,11 +30,10 @@ const main = function() {
 
   data.inputs = createInputArrays(data.names);
 
-  data = startGame(data, header);
+  data.board = startGame(data, header);
 
   updateScreen(header, data.board);
   declareDraw(data.board, header);
-
 };
 
 main();
