@@ -1,19 +1,10 @@
-const headerLib = require('./src/headerLib.js');
-const {selectHeader} = headerLib;
+const {selectHeader} = require('./src/headerLib.js');
 
-const library = require('./src/library.js')
-const {createBoard}        = library;
-const {readGameModeInput}  = library;
-const {readPlayerName}     = library;
-const {readFirstSymbol}    = library;
-const {assignSymbols}      = library;
-const {createInputArrays}  = library;
-const {startGame}          = library;
-const {updateScreen}       = library;
-const {declareDraw}        = library;
+const {createBoard, readGameModeInput, readPlayerName,
+       readFirstSymbol, assignSymbols, createInputArrays,
+       startGame, updateScreen, declareDraw} = require('./src/library.js');
 
 const main = function() {
-
   let header = selectHeader();
   console.log(header);
 

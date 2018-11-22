@@ -223,12 +223,6 @@ const declareDraw = function(board, header) {
   console.log(msg);
 };
 
-exports.createBoard = createBoard;
-exports.readGameModeInput = readGameModeInput;
-exports.readPlayerName = readPlayerName;
-exports.readFirstSymbol = readFirstSymbol;
-exports.assignSymbols = assignSymbols;
-exports.createInputArrays = createInputArrays;
-exports.startGame = startGame;
-exports.updateScreen = updateScreen;
-exports.declareDraw = declareDraw;
+module.exports = {createBoard, readGameModeInput, readPlayerName,
+                  readFirstSymbol, assignSymbols, createInputArrays,
+                  startGame, updateScreen, declareDraw};
