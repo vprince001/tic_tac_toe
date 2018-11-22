@@ -17,7 +17,7 @@ const main = function() {
   console.log(header);
 
   let data = {};
-  data.boardData = [' ',' ',' ',' ',' ',' ',' ',' ',' ',' '];
+  data.boardData = new Array(10).fill(" ");
   data.board = createBoard(data.boardData);
 
   data.modeNumber = readGameModeInput();
