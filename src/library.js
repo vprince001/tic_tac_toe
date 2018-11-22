@@ -45,7 +45,7 @@ const readGameModeInput = function() {
   return modeNumber;
 };
 
-const callReadPlayerName = function(modeNumber) {
+const readPlayerName = function(modeNumber) {
   let retrieveNames = readDoublePlayersName;
   if(modeNumber == 1) {
     retrieveNames = readSinglePlayerName;
@@ -126,12 +126,10 @@ const selectCurrentPlayer = function(names, symbols, currentMove) {
 const executePlayerMove = function(header, data, name, symbol) {
   updateBoard(header, data.board);
   input = +readPlayerInput(name, symbol);
-  let isBlockFree = checkBlockStatus(input, data.boardData, data.symbols);
   
-  while(!isBlockFree) {
+  while(!isBlockFree(input, data.boardData, data.symbols)) {
     console.log("Sorry, this block is already occupied. Please try again.");
     input = +readPlayerInput(name, symbol);
-    isBlockFree = checkBlockStatus(input, data.boardData, data.symbols);
   }
   
   insertSymbol(data, name, symbol, input);
@@ -158,13 +156,13 @@ const readPlayerInput = function(name, symbol) {
   return input;
 };
 
-const checkBlockStatus = function(input, boardData, symbols) {
-  let isBlockFree = true;
+const isBlockFree = function(input, boardData, symbols) {
+  let status = true;
 
   if(boardData[input] == symbols.firstSymbol || boardData[input] == symbols.secondSymbol) {
-    isBlockFree = false;
+    status = false;
   }
-  return isBlockFree;
+  return status;
 };
 
 const insertSymbol = function(data, name, symbol, input) {
@@ -199,11 +197,9 @@ const isEven = function(number) {
 
 const executeBotMove = function(header, data, name, symbol) {
   let input = +Math.ceil(Math.random()*9);
-  let isBlockFree = checkBlockStatus(input, data.boardData, data.symbols);
 
-  while(!isBlockFree) {
+  while(!isBlockFree(input, data.boardData, data.symbols)) {
     input = +Math.ceil(Math.random()*9);
-    isBlockFree = checkBlockStatus(input, data.boardData, data.symbols);
   }
 
   insertSymbol(data, name, symbol, input);
@@ -235,7 +231,7 @@ const declareDraw = function(board, header) {
 
 exports.createBoard = createBoard;
 exports.readGameModeInput = readGameModeInput;
-exports.callReadPlayerName = callReadPlayerName;
+exports.readPlayerName = readPlayerName;
 exports.readFirstSymbol = readFirstSymbol;
 exports.assignSymbols = assignSymbols;
 exports.selectGameMode = selectGameMode;
