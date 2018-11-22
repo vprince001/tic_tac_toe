@@ -1,8 +1,8 @@
 const {selectHeader} = require('./src/headerLib.js');
 
-const {createBoardData, createBoard, readGameModeInput, readPlayerName,
-       readFirstSymbol, assignSymbols, createInputArrays,
-       startGame, updateScreen, declareDraw} = require('./src/library.js');
+const {createBoardData, createBoard, readGameModeInput,
+       readPlayerName, readFirstSymbol, assignSymbols,
+       createInputArrays, startGame, updateScreen} = require('./src/library.js');
 
 const main = function() {
   let header = selectHeader();
@@ -20,11 +20,9 @@ const main = function() {
   data.symbols = assignSymbols(firstSymbol);
 
   data.inputs = createInputArrays(data.names);
-
-  data.board = startGame(data, header);
-
   updateScreen(header, data.board);
-  declareDraw(data.board, header);
+
+  startGame(data, header);
 };
 
 main();

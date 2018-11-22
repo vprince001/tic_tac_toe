@@ -100,13 +100,18 @@ const startGame = function(data, header) {
     let currentPlayer = selectCurrentPlayer(data.names, data.symbols, currentMove);
     let name = currentPlayer.name;
     let symbol = currentPlayer.symbol;
+
     data = currentPlayer.executeMove(header, data, name, symbol);
+    updateScreen(header, data.board);
 
     if(checkWin(data.inputs[name])) { 
-      declareWinner(name, data.board, header)
+      currentMove = declareWinner(name, data.board, header)
+    }
+
+    if(currentMove == 9) {
+      declareDraw(data.board, header);
     }
   }
-  return data.board;
 };
 
 const selectCurrentPlayer = function(names, symbols, currentMove) {
@@ -127,7 +132,6 @@ const selectCurrentPlayer = function(names, symbols, currentMove) {
 };
 
 const executePlayerMove = function(header, data, name, symbol) {
-  updateScreen(header, data.board);
   input = +readPlayerInput(name, symbol);
   
   while(!isBlockFree(input, data.boardData, data.symbols)) {
@@ -197,7 +201,7 @@ const declareWinner = function(name, board, header) {
   let hashLine = repeatCharacter("#", 37);
   updateScreen(header, board);
   console.log(hashLine, name, "won the game !", hashLine);
-  process.exit();
+  return 10;
 };
 
 const isEven = function(number) {
@@ -228,4 +232,4 @@ const declareDraw = function(board, header) {
 
 module.exports = {createBoardData, createBoard, readGameModeInput,
                   readPlayerName, readFirstSymbol, assignSymbols,
-                  createInputArrays, startGame, updateScreen, declareDraw};
+                  createInputArrays, startGame, updateScreen};
