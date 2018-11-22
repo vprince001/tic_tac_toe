@@ -13,8 +13,12 @@ const color = function(selectedColor,text) {
   return colors[selectedColor] + text + colors.white;
 };
 
+const repeatCharacter = function(character, times) {
+  return new Array(times).fill(character).join("");
+};
+
 const createBoard = function (boardData){
-  let blankLine = "                                         ";
+  let blankLine = repeatCharacter(" ", 41);
   let a = color("violet", "| ");
   let b = color("violet", " | ");
   let c = color("violet", " |");
@@ -183,7 +187,7 @@ const isSubset = function(superSet, subsetCandidate) {
 };
 
 const declareWinner = function(name, board, header) {
-  let hashLine = "#####################################"
+  let hashLine = repeatCharacter("#", 37);
   updateBoard(header, board);
   console.log(hashLine, name, "won the game !", hashLine);
   process.exit();
@@ -222,7 +226,7 @@ const startDoublePlayerGame = function(data, header) {
 };
 
 const declareDraw = function(board, header) {
-  let hashLine = color("violet","##########################################");
+  let hashLine = color("violet", repeatCharacter("#", 42));
   let drawMsg = color("green","IT'S A DRAW");
   let msg = hashLine + drawMsg + hashLine;
 
