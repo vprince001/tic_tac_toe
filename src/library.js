@@ -94,22 +94,22 @@ const assignSymbols = function(firstSymbol) {
   return symbols;
 };
 
-const startGame = function(data, header) {
+const startGame = function(game, header) {
 
   for(let currentMove = 1; currentMove < 10; currentMove++) {
-    let currentPlayer = selectCurrentPlayer(data.names, data.symbols, currentMove);
+    let currentPlayer = selectCurrentPlayer(game.names, game.symbols, currentMove);
     let name = currentPlayer.name;
     let symbol = currentPlayer.symbol;
 
-    data = currentPlayer.executeMove(header, data, name, symbol);
-    updateScreen(header, data.board);
+    game = currentPlayer.executeMove(header, game, name, symbol);
+    updateScreen(header, game.board);
 
-    if(checkWin(data.inputs[name])) { 
-      currentMove = declareWinner(name, data.board, header)
+    if(checkWin(game.inputs[name])) { 
+      currentMove = declareWinner(name, game.board, header)
     }
 
     if(currentMove == 9) {
-      declareDraw(data.board, header);
+      declareDraw(game.board, header);
     }
   }
 };
@@ -131,16 +131,16 @@ const selectCurrentPlayer = function(names, symbols, currentMove) {
   return currentPlayer;
 };
 
-const executePlayerMove = function(header, data, name, symbol) {
+const executePlayerMove = function(header, game, name, symbol) {
   input = +readPlayerInput(name, symbol);
   
-  while(!isBlockFree(input, data.boardData, data.symbols)) {
+  while(!isBlockFree(input, game.boardData, game.symbols)) {
     console.log("Sorry, this block is already occupied. Please try again.");
     input = +readPlayerInput(name, symbol);
   }
   
-  insertSymbol(data, name, symbol, input);
-  return data;
+  insertSymbol(game, name, symbol, input);
+  return game;
 };
 
 const updateScreen = function(header, board) {
@@ -151,7 +151,7 @@ const updateScreen = function(header, board) {
 
 const readPlayerInput = function(name, symbol) {
   let msgForInput = "Enter number between 1 to 9\n";
-  let msgForInvalidInput = "Entered data is not valid. Please enter number between 1 to 9 only.\n";
+  let msgForInvalidInput = "Entered game is not valid. Please enter number between 1 to 9 only.\n";
   console.log("\nTurn of",color('blue',name),":",symbol);
 
   let input = readline.questionInt(msgForInput);
@@ -178,10 +178,10 @@ const createInputArrays = function(names) {
   return inputs;
 }
 
-const insertSymbol = function(data, name, symbol, input) {
-  data.boardData[input] = symbol;
-  data.inputs[name].push(input);
-  data.board = createBoard(data.boardData);
+const insertSymbol = function(game, name, symbol, input) {
+  game.boardData[input] = symbol;
+  game.inputs[name].push(input);
+  game.board = createBoard(game.boardData);
 };
 
 const checkWin = function(playerInputs) {
@@ -208,18 +208,18 @@ const isEven = function(number) {
   return number%2 == 0;
 };
 
-const executeBotMove = function(header, data, name, symbol) {
+const executeBotMove = function(header, game, name, symbol) {
   let input = +Math.ceil(Math.random()*9);
 
-  while(!isBlockFree(input, data.boardData, data.symbols)) {
+  while(!isBlockFree(input, game.boardData, game.symbols)) {
     input = +Math.ceil(Math.random()*9);
   }
 
-  insertSymbol(data, name, symbol, input);
+  insertSymbol(game, name, symbol, input);
   
-  updateScreen(header, data.board);
+  updateScreen(header, game.board);
   readline.question(name+" input is "+input+". Press enter to continue.");
-  return data;
+  return game;
 };
 
 const declareDraw = function(board, header) {

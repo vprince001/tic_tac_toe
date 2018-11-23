@@ -8,21 +8,21 @@ const main = function() {
   let header = selectHeader();
   console.log(header);
 
-  let data = {};
-  data.boardData = createBoardData();
-  data.board = createBoard(data.boardData);
+  let game = {};
+  game.boardData = createBoardData();
+  game.board = createBoard(game.boardData);
 
-  data.modeNumber = readGameModeInput();
+  game.modeNumber = readGameModeInput();
 
-  data.names = readPlayerName(data.modeNumber);
+  game.names = readPlayerName(game.modeNumber);
 
-  let firstSymbol = readFirstSymbol(data.names.firstName);
-  data.symbols = assignSymbols(firstSymbol);
+  let firstSymbol = readFirstSymbol(game.names.firstName);
+  game.symbols = assignSymbols(firstSymbol);
 
-  data.inputs = createInputArrays(data.names);
-  updateScreen(header, data.board);
+  game.inputs = createInputArrays(game.names);
+  updateScreen(header, game.board);
 
-  startGame(data, header);
+  startGame(game, header);
 };
 
 main();
