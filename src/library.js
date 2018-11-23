@@ -7,18 +7,25 @@ const createBoardData = function() {
 };
 
 const createBoard = function (boardData){
-  let blankLine = repeatCharacter(" ", 41);
-  let a = color("violet", "| ");
-  let b = color("violet", " | ");
-  let c = color("violet", " |");
+  let spaces = repeatCharacter(" ", 41);
 
-  let firstLine =  blankLine+ a +boardData[1]+ b +boardData[2]+ b +boardData[3]+ c +"\n";
-  let secondLine = blankLine+ a +boardData[4]+ b +boardData[5]+ b +boardData[6]+ c +"\n";
-  let thirdLine  = blankLine+ a +boardData[7]+ b +boardData[8]+ b +boardData[9]+ c +"\n";
-  let border = blankLine + color("violet", "+---+---+---+") + "\n";
+  let firstLine  = createLine(spaces, boardData[1], boardData[2], boardData[3]);
+  let secondLine = createLine(spaces, boardData[4], boardData[5], boardData[6]);
+  let thirdLine  = createLine(spaces ,boardData[7], boardData[8], boardData[9]);
+  let border = spaces + color("violet", "+---+---+---+") + "\n";
 
   let board = border + firstLine + border + secondLine + border + thirdLine + border;
   return board;
+};
+
+const createLine = function(spaces, first, second, third) {
+  let line = spaces;
+  line    += color("violet", "| ")  + first;
+  line    += color("violet", " | ") + second;
+  line    += color("violet", " | ") + third;
+  line    += color("violet", " |")  + "\n";
+
+  return line;
 };
 
 const repeatCharacter = function(character, times) {
