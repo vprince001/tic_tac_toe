@@ -14,17 +14,11 @@ const color = function(selectedColor,text) {
 const selectHeader = function() {
   let randomNumer = Math.ceil(Math.random()*3);
 
-  switch(randomNumer) {
-    case 1:
-      selectedHeader = generateHeader1();
-      break;
-    case 2:
-      selectedHeader = generateHeader2();
-      break;
-    default:
-      selectedHeader = generateHeader3();
-  }
-  return selectedHeader;
+  let header = { 1 : generateHeader1(),
+                 2 : generateHeader2(),
+                 3 : generateHeader3() };
+
+  return header[randomNumer];
 };
 
 const generateHeader1 = function() {

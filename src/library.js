@@ -47,14 +47,19 @@ const readPlayerName = function(modeNumber, players) {
 };
 
 const readSinglePlayerName = function(players) {
-  players.player1.name = color("blue",readline.question("Please enter your name : "));
-  players.player2.name = color("green","Computer");
+  let player1msg = "Please enter your name : ";
+
+  players.player1.name = color("blue", readline.question(player1msg));
+  players.player2.name = color("green", "Computer");
   return players;
 };
 
 const readDoublePlayersName = function(players) {
-  players.player1.name = color("blue",readline.question("Please enter first player's name : "));
-  players.player2.name = color("green",readline.question("Please enter second player's name : "));
+  let player1msg = "Please enter first player's name : ";
+  let player2msg = "Player enter second player's name : ";
+
+  players.player1.name = color("blue", readline.question(player1msg));
+  players.player2.name = color("green", readline.question(player2msg));
   return players;
 };
 
