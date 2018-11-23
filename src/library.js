@@ -92,14 +92,32 @@ const assignSymbols = function(firstSymbol, players) {
   return players;
 };
 
+const switchTurn = function() {
+  let player = { 0 : 'player1', 1 : 'player2' }
+  let turn = 0;
+
+  return function() {
+    turn = 1-turn;
+    return player[turn];
+  }
+};
+
 const startGame = function(game, header) {
 
-  for(let currentMove = 1; currentMove < 10; currentMove++) {
-    let currentPlayer = selectCurrentPlayer(game.players, currentMove);
-    let name = currentPlayer.name;
-    let symbol = currentPlayer.symbol;
+  game.turn = 'player1';
+  let toggle = switchTurn();
 
-    game = currentPlayer.executeMove(header, game, name, symbol);
+  for(let currentMove = 1; currentMove < 10; currentMove++) {
+
+    let name = game.players[game.turn].name;
+    let symbol = game.players[game.turn].symbol;
+    let executeMove = executePlayerMove;
+
+    if(name == color("green", "Computer")) {
+      executeMove = executeBotMove;
+    }
+
+    game = executeMove(header, game, name, symbol);
     updateScreen(header, game.board.frame);
 
     if(checkWin(game.inputs[name])) { 
@@ -109,24 +127,8 @@ const startGame = function(game, header) {
     if(currentMove == 9) {
       declareDraw(game.board.frame, header);
     }
+    game.turn = toggle();
   }
-};
-
-const selectCurrentPlayer = function(players, currentMove) {
-  let currentPlayer = {}
-  currentPlayer.name = players.player1.name;
-  currentPlayer.symbol = players.player1.symbol;
-
-  if(isEven(currentMove)) {
-    currentPlayer.name = players.player2.name;
-    currentPlayer.symbol = players.player2.symbol;
-  }
-
-  currentPlayer.executeMove = executePlayerMove;
-  if(currentPlayer.name == color("green", "Computer")) {
-    currentPlayer.executeMove = executeBotMove;
-  }
-  return currentPlayer;
 };
 
 const executePlayerMove = function(header, game, name, symbol) {
