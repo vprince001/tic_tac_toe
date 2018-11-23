@@ -1,19 +1,6 @@
 const readline = require('readline-sync');
 
-const {selectHeader} = require('./headerLib.js');
-
-const color = function(selectedColor,text) {
-  let colors = {};
-  colors.red    = "\033[31m";
-  colors.green  = "\033[32m";
-  colors.yellow = "\033[33m";
-  colors.blue   = "\033[34m";
-  colors.violet = "\033[35m";
-  colors.cyan   = "\033[36m";
-  colors.white  = "\033[37m";
-
-  return colors[selectedColor] + text + colors.white;
-};
+const { color, selectHeader } = require('./headerLib.js');
 
 const createBoardData = function() {
   return new Array(10).fill(" ");
@@ -254,4 +241,4 @@ const declareDraw = function(frame, header) {
   console.log(msg);
 };
 
-module.exports = {retrieveGameData, startGame};
+module.exports = { retrieveGameData, startGame };

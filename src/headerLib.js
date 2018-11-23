@@ -86,4 +86,4 @@ const generateHeader3 = function() {
   return header;
 }
 
-exports.selectHeader = selectHeader;
+module.exports = { color, selectHeader };
