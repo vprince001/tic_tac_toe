@@ -49,36 +49,34 @@ const readGameModeInput = function() {
   return modeNumber;
 };
 
-const readPlayerName = function(modeNumber) {
+const readPlayerName = function(modeNumber, players) {
   let retrieveNames = readDoublePlayersName;
   if(modeNumber == '1') {
     retrieveNames = readSinglePlayerName;
   }
-  return retrieveNames();
+  return retrieveNames(players);
 };
 
-const readSinglePlayerName = function() {
-  let names = {};
-  names.firstName = color("blue",readline.question("Please enter your name : "));
-  names.secondName = color("green","Computer");
-  return names;
+const readSinglePlayerName = function(players) {
+  players.player1.name = color("blue",readline.question("Please enter your name : "));
+  players.player2.name = color("green","Computer");
+  return players;
 };
 
-const readDoublePlayersName = function() {
-  let names = {};
-  names.firstName = color("blue",readline.question("Please enter first player's name : "));
-  names.secondName = color("green",readline.question("Please enter second player's name : "));
-  return names;
+const readDoublePlayersName = function(players) {
+  players.player1.name = color("blue",readline.question("Please enter first player's name : "));
+  players.player2.name = color("green",readline.question("Please enter second player's name : "));
+  return players;
 };
 
-const readFirstSymbol = function(firstName) {
+const readFirstSymbol = function(player1Name) {
   let msgForSymbol = "Choose your symbol either 'x' or 'o' : ";
   let msgForInvalidSymbol = "Valid symbols are 'x' or 'o'. Please choose one from these only : "
   
-  let firstSymbol = readline.question("\n"+firstName+", "+msgForSymbol);
+  let firstSymbol = readline.question("\n"+player1Name+", "+msgForSymbol);
   
   while(firstSymbol != "x" && firstSymbol != "o") {
-     firstSymbol = readline.question("\n"+firstName+", "+msgForInvalidSymbol);
+     firstSymbol = readline.question("\n"+player1Name+", "+msgForInvalidSymbol);
   }
   return firstSymbol;
 };
@@ -97,7 +95,7 @@ const assignSymbols = function(firstSymbol) {
 const startGame = function(game, header) {
 
   for(let currentMove = 1; currentMove < 10; currentMove++) {
-    let currentPlayer = selectCurrentPlayer(game.names, game.symbols, currentMove);
+    let currentPlayer = selectCurrentPlayer(game.players, game.symbols, currentMove);
     let name = currentPlayer.name;
     let symbol = currentPlayer.symbol;
 
@@ -114,13 +112,13 @@ const startGame = function(game, header) {
   }
 };
 
-const selectCurrentPlayer = function(names, symbols, currentMove) {
+const selectCurrentPlayer = function(players, symbols, currentMove) {
   let currentPlayer = {}
-  currentPlayer.name = names.firstName;
+  currentPlayer.name = players.player1.name;
   currentPlayer.symbol = symbols.firstSymbol;
 
   if(isEven(currentMove)) {
-    currentPlayer.name = names.secondName;
+    currentPlayer.name = players.player2.name;
     currentPlayer.symbol = symbols.secondSymbol;
   }
 
@@ -171,10 +169,10 @@ const isBlockFree = function(input, boardData, symbols) {
   return status;
 };
 
-const createInputArrays = function(names) {
+const createInputArrays = function(players) {
   let inputs = {};
-  inputs[names.firstName] = [];
-  inputs[names.secondName] = [];
+  inputs[players.player1.name] = [];
+  inputs[players.player2.name] = [];
   return inputs;
 }
 

@@ -16,12 +16,15 @@ const main = function() {
 
   game.modeNumber = readGameModeInput();
 
-  game.names = readPlayerName(game.modeNumber);
+  game.players = { player1 : {} };
+  game.players.player2 = {};
+  
+  game.players = readPlayerName(game.modeNumber, game.players);
 
-  let firstSymbol = readFirstSymbol(game.names.firstName);
+  let firstSymbol = readFirstSymbol(game.players.player1.name);
   game.symbols = assignSymbols(firstSymbol);
 
-  game.inputs = createInputArrays(game.names);
+  game.inputs = createInputArrays(game.players);
   updateScreen(game.header, game.board.frame);
 
   startGame(game, game.header);
