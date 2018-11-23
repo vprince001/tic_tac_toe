@@ -5,10 +5,10 @@ const {createBoardData, createBoard, readGameModeInput,
        createInputArrays, startGame, updateScreen} = require('./src/library.js');
 
 const main = function() {
-  let header = selectHeader();
-  console.log(header);
-
   let game = {};
+  game.header = selectHeader();
+  console.log(game.header);
+
   game.boardData = createBoardData();
   game.board = createBoard(game.boardData);
 
@@ -20,9 +20,9 @@ const main = function() {
   game.symbols = assignSymbols(firstSymbol);
 
   game.inputs = createInputArrays(game.names);
-  updateScreen(header, game.board);
+  updateScreen(game.header, game.board);
 
-  startGame(game, header);
+  startGame(game, game.header);
 };
 
 main();
