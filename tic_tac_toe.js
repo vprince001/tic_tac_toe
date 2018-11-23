@@ -22,7 +22,7 @@ const main = function() {
   game.players = readPlayerName(game.modeNumber, game.players);
 
   let firstSymbol = readFirstSymbol(game.players.player1.name);
-  game.symbols = assignSymbols(firstSymbol);
+  game.players = assignSymbols(firstSymbol, game.players);
 
   game.inputs = createInputArrays(game.players);
   updateScreen(game.header, game.board.frame);

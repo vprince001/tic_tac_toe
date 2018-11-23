@@ -81,21 +81,21 @@ const readFirstSymbol = function(player1Name) {
   return firstSymbol;
 };
 
-const assignSymbols = function(firstSymbol) {
-  let symbols = {};
-  symbols.firstSymbol = color("red",firstSymbol);
-  symbols.secondSymbol = color("yellow", "x");
+const assignSymbols = function(firstSymbol, players) {
+  
+  players.player1.symbol = color("red",firstSymbol);
+  players.player2.symbol = color("yellow", "x");
 
-  if(symbols.firstSymbol == color("red", "x")) {
-    symbols.secondSymbol = color("yellow", "o");
+  if(players.player1.symbol = color("red", "x")) {
+    players.player2.symbol = color("yellow", "o");
   }
-  return symbols;
+  return players;
 };
 
 const startGame = function(game, header) {
 
   for(let currentMove = 1; currentMove < 10; currentMove++) {
-    let currentPlayer = selectCurrentPlayer(game.players, game.symbols, currentMove);
+    let currentPlayer = selectCurrentPlayer(game.players, currentMove);
     let name = currentPlayer.name;
     let symbol = currentPlayer.symbol;
 
@@ -112,14 +112,14 @@ const startGame = function(game, header) {
   }
 };
 
-const selectCurrentPlayer = function(players, symbols, currentMove) {
+const selectCurrentPlayer = function(players, currentMove) {
   let currentPlayer = {}
   currentPlayer.name = players.player1.name;
-  currentPlayer.symbol = symbols.firstSymbol;
+  currentPlayer.symbol = players.player1.symbol;
 
   if(isEven(currentMove)) {
     currentPlayer.name = players.player2.name;
-    currentPlayer.symbol = symbols.secondSymbol;
+    currentPlayer.symbol = players.player2.symbol;
   }
 
   currentPlayer.executeMove = executePlayerMove;
@@ -132,7 +132,7 @@ const selectCurrentPlayer = function(players, symbols, currentMove) {
 const executePlayerMove = function(header, game, name, symbol) {
   input = +readPlayerInput(name, symbol);
   
-  while(!isBlockFree(input, game.board.data, game.symbols)) {
+  while(!isBlockFree(input, game.board.data, game.players)) {
     console.log("Sorry, this block is already occupied. Please try again.");
     input = +readPlayerInput(name, symbol);
   }
@@ -160,10 +160,10 @@ const readPlayerInput = function(name, symbol) {
   return input;
 };
 
-const isBlockFree = function(input, boardData, symbols) {
+const isBlockFree = function(input, boardData, players) {
   let status = true;
 
-  if(boardData[input] == symbols.firstSymbol || boardData[input] == symbols.secondSymbol) {
+  if(boardData[input] == players.player1.symbol || boardData[input] == players.player2.symbol) {
     status = false;
   }
   return status;
@@ -209,7 +209,7 @@ const isEven = function(number) {
 const executeBotMove = function(header, game, name, symbol) {
   let input = +Math.ceil(Math.random()*9);
 
-  while(!isBlockFree(input, game.board.data, game.symbols)) {
+  while(!isBlockFree(input, game.board.data, game.players)) {
     input = +Math.ceil(Math.random()*9);
   }
 
