@@ -1,12 +1,13 @@
 const color = function(selectedColor,text) {
-  let colors = {};
-  colors.red    = "\033[31m";
-  colors.green  = "\033[32m";
-  colors.yellow = "\033[33m";
-  colors.blue   = "\033[34m";
-  colors.violet = "\033[35m";
-  colors.cyan   = "\033[36m";
-  colors.white  = "\033[37m";
+  let colors = { 
+    red    : "\033[31m",
+    green  : "\033[32m",
+    yellow : "\033[33m",
+    blue   : "\033[34m",
+    violet : "\033[35m",
+    cyan   : "\033[36m",
+    white  : "\033[37m"
+  };
 
   return colors[selectedColor] + text + colors.white;
 };
@@ -14,9 +15,11 @@ const color = function(selectedColor,text) {
 const selectHeader = function() {
   let randomNumer = Math.ceil(Math.random()*3);
 
-  let header = { 1 : generateHeader1(),
-                 2 : generateHeader2(),
-                 3 : generateHeader3() };
+  let header = {
+    1 : generateHeader1(),
+    2 : generateHeader2(),
+    3 : generateHeader3()
+  };
 
   return header[randomNumer];
 };
@@ -25,7 +28,7 @@ const generateHeader1 = function() {
   let dashes = color("violet", "≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈");
   let l = color("yellow", "|");
   let borderLine = dashes +l+ dashes +l+ dashes +l+ dashes +l+ dashes + "\n";
- 
+
   let dName = color("green", "¥  †¡ç - †åç - †ø£  ¥");
   let sName = color("red",  "¥  TIC - TAC - TOE  ¥");
   let nameLine = dName +l+ sName +l+ dName +l+ sName +l+ dName + "\n";
