@@ -117,10 +117,10 @@ const startGame = function(game, header) {
       executeMove = executeBotMove;
     }
 
-    game = executeMove(header, game, name, symbol);
+    game = executeMove(header, game, name, symbol, game.turn);
     updateScreen(header, game.board.frame);
 
-    if(checkWin(game.inputs[name])) { 
+    if(checkWin(game.players[game.turn].inputs)) { 
       currentMove = declareWinner(name, game.board.frame, header)
     }
 
@@ -131,7 +131,7 @@ const startGame = function(game, header) {
   }
 };
 
-const executePlayerMove = function(header, game, name, symbol) {
+const executePlayerMove = function(header, game, name, symbol, turn) {
   input = +readPlayerInput(name, symbol);
   
   while(!isBlockFree(input, game.board.data, game.players)) {
@@ -139,7 +139,7 @@ const executePlayerMove = function(header, game, name, symbol) {
     input = +readPlayerInput(name, symbol);
   }
   
-  insertSymbol(game, name, symbol, input);
+  insertSymbol(game, turn, symbol, input);
   return game;
 };
 
@@ -172,15 +172,14 @@ const isBlockFree = function(input, boardData, players) {
 };
 
 const createInputArrays = function(players) {
-  let inputs = {};
-  inputs[players.player1.name] = [];
-  inputs[players.player2.name] = [];
-  return inputs;
+  players.player1.inputs = [];
+  players.player2.inputs = [];
+  return players;
 }
 
-const insertSymbol = function(game, name, symbol, input) {
+const insertSymbol = function(game, turn, symbol, input) {
   game.board.data[input] = symbol;
-  game.inputs[name].push(input);
+  game.players[turn].inputs.push(input);
   game.board.frame = createBoard(game.board.data);
 };
 
@@ -208,14 +207,14 @@ const isEven = function(number) {
   return number%2 == 0;
 };
 
-const executeBotMove = function(header, game, name, symbol) {
+const executeBotMove = function(header, game, name, symbol, turn) {
   let input = +Math.ceil(Math.random()*9);
 
   while(!isBlockFree(input, game.board.data, game.players)) {
     input = +Math.ceil(Math.random()*9);
   }
 
-  insertSymbol(game, name, symbol, input);
+  insertSymbol(game, turn, symbol, input);
   
   updateScreen(header, game.board.frame);
   readline.question(name+" input is "+input+". Press enter to continue.");

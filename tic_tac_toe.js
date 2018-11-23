@@ -24,7 +24,7 @@ const main = function() {
   let firstSymbol = readFirstSymbol(game.players.player1.name);
   game.players = assignSymbols(firstSymbol, game.players);
 
-  game.inputs = createInputArrays(game.players);
+  game.players = createInputArrays(game.players);
   updateScreen(game.header, game.board.frame);
 
   startGame(game, game.header);
