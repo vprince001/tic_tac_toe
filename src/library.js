@@ -102,14 +102,14 @@ const startGame = function(game, header) {
     let symbol = currentPlayer.symbol;
 
     game = currentPlayer.executeMove(header, game, name, symbol);
-    updateScreen(header, game.board);
+    updateScreen(header, game.board.frame);
 
     if(checkWin(game.inputs[name])) { 
-      currentMove = declareWinner(name, game.board, header)
+      currentMove = declareWinner(name, game.board.frame, header)
     }
 
     if(currentMove == 9) {
-      declareDraw(game.board, header);
+      declareDraw(game.board.frame, header);
     }
   }
 };
@@ -134,7 +134,7 @@ const selectCurrentPlayer = function(names, symbols, currentMove) {
 const executePlayerMove = function(header, game, name, symbol) {
   input = +readPlayerInput(name, symbol);
   
-  while(!isBlockFree(input, game.boardData, game.symbols)) {
+  while(!isBlockFree(input, game.board.data, game.symbols)) {
     console.log("Sorry, this block is already occupied. Please try again.");
     input = +readPlayerInput(name, symbol);
   }
@@ -143,10 +143,10 @@ const executePlayerMove = function(header, game, name, symbol) {
   return game;
 };
 
-const updateScreen = function(header, board) {
+const updateScreen = function(header, frame) {
   console.clear();
   console.log(header);
-  console.log(board);
+  console.log(frame);
 };
 
 const readPlayerInput = function(name, symbol) {
@@ -179,9 +179,9 @@ const createInputArrays = function(names) {
 }
 
 const insertSymbol = function(game, name, symbol, input) {
-  game.boardData[input] = symbol;
+  game.board.data[input] = symbol;
   game.inputs[name].push(input);
-  game.board = createBoard(game.boardData);
+  game.board.frame = createBoard(game.board.data);
 };
 
 const checkWin = function(playerInputs) {
@@ -197,9 +197,9 @@ const isSubset = function(superSet, subsetCandidate) {
   })
 };
 
-const declareWinner = function(name, board, header) {
+const declareWinner = function(name, frame, header) {
   let hashLine = repeatCharacter("#", 37);
-  updateScreen(header, board);
+  updateScreen(header, frame);
   console.log(hashLine, name, "won the game !", hashLine);
   return 10;
 };
@@ -211,18 +211,18 @@ const isEven = function(number) {
 const executeBotMove = function(header, game, name, symbol) {
   let input = +Math.ceil(Math.random()*9);
 
-  while(!isBlockFree(input, game.boardData, game.symbols)) {
+  while(!isBlockFree(input, game.board.data, game.symbols)) {
     input = +Math.ceil(Math.random()*9);
   }
 
   insertSymbol(game, name, symbol, input);
   
-  updateScreen(header, game.board);
+  updateScreen(header, game.board.frame);
   readline.question(name+" input is "+input+". Press enter to continue.");
   return game;
 };
 
-const declareDraw = function(board, header) {
+const declareDraw = function(frame, header) {
   let hashLine = color("violet", repeatCharacter("#", 42));
   let drawMsg = color("green","IT'S A DRAW");
   let msg = hashLine + drawMsg + hashLine;

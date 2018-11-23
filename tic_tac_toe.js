@@ -1,3 +1,5 @@
+const readline = require('readline-sync');
+
 const {selectHeader} = require('./src/headerLib.js');
 
 const {createBoardData, createBoard, readGameModeInput,
@@ -9,8 +11,8 @@ const main = function() {
   game.header = selectHeader();
   console.log(game.header);
 
-  game.boardData = createBoardData();
-  game.board = createBoard(game.boardData);
+  game.board = { data : createBoardData() };
+  game.board.frame = createBoard(game.board.data);
 
   game.modeNumber = readGameModeInput();
 
@@ -20,7 +22,7 @@ const main = function() {
   game.symbols = assignSymbols(firstSymbol);
 
   game.inputs = createInputArrays(game.names);
-  updateScreen(game.header, game.board);
+  updateScreen(game.header, game.board.frame);
 
   startGame(game, game.header);
 };
