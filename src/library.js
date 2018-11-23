@@ -1,5 +1,7 @@
 const readline = require('readline-sync');
 
+const {selectHeader} = require('./headerLib.js');
+
 const color = function(selectedColor,text) {
   let colors = {};
   colors.red    = "\033[31m";
@@ -102,10 +104,33 @@ const switchTurn = function() {
   }
 };
 
-const startGame = function(game, header) {
+const retrieveGameData = function() {
+  let game = {};
+  game.header = selectHeader();
+
+  game.board = {};
+  game.board.data = createBoardData();
+  game.board.frame = createBoard(game.board.data);
+
+  console.log(game.header);
+  game.modeNumber = readGameModeInput();
+  
+  game.players = { player1 : {}, player2 : {} };
+  game.players = readPlayerName(game.modeNumber, game.players);
+
+  let firstSymbol = readFirstSymbol(game.players.player1.name);
+  game.players = assignSymbols(firstSymbol, game.players);
+
+  game.players = createInputArrays(game.players);
+  updateScreen(game.header, game.board.frame);
+
+  return game;
+};
+
+const startGame = function(game) {
 
   game.turn = 'player1';
-  let toggle = switchTurn();
+  let switchPlayer = switchTurn();
 
   for(let currentMove = 1; currentMove < 10; currentMove++) {
 
@@ -117,21 +142,21 @@ const startGame = function(game, header) {
       executeMove = executeBotMove;
     }
 
-    game = executeMove(header, game, name, symbol, game.turn);
-    updateScreen(header, game.board.frame);
+    game = executeMove(game, name, symbol, game.turn);
+    updateScreen(game.header, game.board.frame);
 
     if(checkWin(game.players[game.turn].inputs)) { 
-      currentMove = declareWinner(name, game.board.frame, header)
+      currentMove = declareWinner(name, game.board.frame, game.header)
     }
 
     if(currentMove == 9) {
-      declareDraw(game.board.frame, header);
+      declareDraw(game.board.frame, game.header);
     }
-    game.turn = toggle();
+    game.turn = switchPlayer();
   }
 };
 
-const executePlayerMove = function(header, game, name, symbol, turn) {
+const executePlayerMove = function(game, name, symbol, turn) {
   input = +readPlayerInput(name, symbol);
   
   while(!isBlockFree(input, game.board.data, game.players)) {
@@ -207,7 +232,7 @@ const isEven = function(number) {
   return number%2 == 0;
 };
 
-const executeBotMove = function(header, game, name, symbol, turn) {
+const executeBotMove = function(game, name, symbol, turn) {
   let input = +Math.ceil(Math.random()*9);
 
   while(!isBlockFree(input, game.board.data, game.players)) {
@@ -216,7 +241,7 @@ const executeBotMove = function(header, game, name, symbol, turn) {
 
   insertSymbol(game, turn, symbol, input);
   
-  updateScreen(header, game.board.frame);
+  updateScreen(game.header, game.board.frame);
   readline.question(name+" input is "+input+". Press enter to continue.");
   return game;
 };
@@ -229,6 +254,4 @@ const declareDraw = function(frame, header) {
   console.log(msg);
 };
 
-module.exports = {createBoardData, createBoard, readGameModeInput,
-                  readPlayerName, readFirstSymbol, assignSymbols,
-                  createInputArrays, startGame, updateScreen};
+module.exports = {retrieveGameData, startGame};
