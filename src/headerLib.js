@@ -8,7 +8,6 @@ const color = function(selectedColor,text) {
     cyan   : "\033[36m",
     white  : "\033[37m"
   };
-
   return colors[selectedColor] + text + colors.white;
 };
 
@@ -53,22 +52,33 @@ const generateHeader1 = function() {
   return header;
 };
 
+
+const createLines = function(tic, tac, toe, border) {
+  let lines = {};
+  lines.ticLine    = repeatString(tic, 5) + "\n";
+  lines.tacLine    = repeatString(tac, 5) + "\n";
+  lines.toeLine    = repeatString(toe, 5) + "\n";
+  lines.borderLine = repeatString(border, 5) + "\n";
+  return lines;
+};
+
+const getHeader = function(lines) {
+  let header = "\n";
+  header += lines.borderLine + lines.ticLine;
+  header += lines.borderLine + lines.tacLine;
+  header += lines.borderLine + lines.toeLine;
+  header += lines.borderLine; 
+  return header;
+};
+
 const generateHeader2 = function() {
   let tic    = color("red",    "   | T | I | C |   ");
   let tac    = color("red",    "   | T | A | C |   ");
   let toe    = color("red",    "   | T | O | E |   ");
   let border = color("yellow", "   +---+---+---+   ");
 
-  let ticLine    = repeatString(tic, 5) + "\n";
-  let tacLine    = repeatString(tac, 5) + "\n";
-  let toeLine    = repeatString(toe, 5) + "\n";
-  let borderLine = repeatString(border, 5) + "\n";
-
-  let header = "\n";
-  header += borderLine + ticLine;
-  header += borderLine + tacLine;
-  header += borderLine + toeLine;
-  header += borderLine; 
+  let lines = createLines(tic, tac, toe, border);
+  let header = getHeader(lines);
   return header;
 };
 
@@ -78,16 +88,8 @@ const generateHeader3 = function() {
   let toe    = color("yellow", "   | t | o | e |   ");
   let border = color("green",  "   +---+---+---+   ");
 
-  let ticLine    = repeatString(tic, 5) + "\n";
-  let tacLine    = repeatString(tac, 5) + "\n";
-  let toeLine    = repeatString(toe, 5) + "\n";
-  let borderLine = repeatString(border, 5) + "\n";
-
-  let header = "\n";
-  header += borderLine + ticLine;
-  header += borderLine + tacLine;
-  header += borderLine + toeLine;
-  header += borderLine; 
+  let lines = createLines(tic, tac, toe, border);
+  let header = getHeader(lines);
   return header;
 };
 
@@ -97,16 +99,8 @@ const generateHeader4 = function() {
   let toe    = color("green", "   | † | ø | ç |   ");
   let border = color("red",   "   +---+---+---+   ");
 
-  let ticLine    = repeatString(tic, 5) + "\n";
-  let tacLine    = repeatString(tac, 5) + "\n";
-  let toeLine    = repeatString(toe, 5) + "\n";
-  let borderLine = repeatString(border, 5) + "\n";
-
-  let header = "\n";
-  header += borderLine + ticLine;
-  header += borderLine + tacLine;
-  header += borderLine + toeLine;
-  header += borderLine; 
+  let lines = createLines(tic, tac, toe, border);
+  let header = getHeader(lines);
   return header;
 };
 
