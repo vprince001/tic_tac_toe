@@ -13,74 +13,101 @@ const color = function(selectedColor,text) {
 };
 
 const selectHeader = function() {
-  let randomNumer = Math.ceil(Math.random()*3);
+  let randomNumer = Math.ceil(Math.random()*4);
 
   let header = {
     1 : generateHeader1(),
     2 : generateHeader2(),
-    3 : generateHeader3()
+    3 : generateHeader3(),
+    4 : generateHeader4()
   };
 
   return header[randomNumer];
 };
 
 const generateHeader1 = function() {
+
   let dashes = color("violet", "≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈");
   let l = color("yellow", "|");
-  let borderLine = dashes +l+ dashes +l+ dashes +l+ dashes +l+ dashes + "\n";
+  let borderLine = dashes + l;
+  borderLine += repeatString(borderLine, 3);
+  borderLine += dashes + "\n";
 
-  let dName = color("green", "¥  †¡ç - †åç - †ø£  ¥");
-  let sName = color("red",  "¥  TIC - TAC - TOE  ¥");
-  let nameLine = dName +l+ sName +l+ dName +l+ sName +l+ dName + "\n";
+  let specialName = color("green", "¥  †¡ç - †åç - †ø£  ¥");
+  let simpleName = color("red",  "¥  TIC - TAC - TOE  ¥");
+  
+  let nameLine = specialName + l + simpleName + l;
+  nameLine += nameLine + specialName + "\n";
 
-  let header = "\n"+borderLine + borderLine + nameLine + borderLine + borderLine;
+  let header = "\n";
+  header += repeatString(borderLine,2) + nameLine;
+  header += repeatString(borderLine,2);
   return header;
 };
 
+const repeatString = function(string, times) {
+  let line = string;
+  for( let i = 1; i < times; i++) {
+    line += string;
+  }
+  return line;
+};
+
 const generateHeader2 = function() {
-  let ticCaps       = color("red",    "   | T | I | C |   ");
-  let tacCaps       = color("red",    "   | T | A | C |   ");
-  let toeCaps       = color("red",    "   | T | O | E |   ");
-  let borderCaps    = color("red",    "   +---+---+---+   ");
+  let tic    = color("red",    "   | T | I | C |   ");
+  let tac    = color("red",    "   | T | A | C |   ");
+  let toe    = color("red",    "   | T | O | E |   ");
+  let border = color("yellow", "   +---+---+---+   ");
 
-  let ticSmalls     = color("yellow", "   | t | i | c |   ");
-  let tacSmalls     = color("yellow", "   | t | a | c |   ");
-  let toeSmalls     = color("yellow", "   | t | o | e |   ");
-  let borderSmalls  = color("yellow", "   +---+---+---+   ");
+  let ticLine    = repeatString(tic, 5) + "\n";
+  let tacLine    = repeatString(tac, 5) + "\n";
+  let toeLine    = repeatString(toe, 5) + "\n";
+  let borderLine = repeatString(border, 5) + "\n";
 
-  let ticHiddens    = color("green",  "   | † | ¡ | ç |   ");
-  let tacHiddens    = color("green",  "   | † | å | ç |   ");
-  let toeHiddens    = color("green",  "   | † | ø | £ |   ");
-  let borderHiddens = color("green",  "   +---+---+---+   ");
-
-  let ticLine = ticHiddens + ticSmalls + ticCaps + ticSmalls + ticHiddens + "\n";
-  let tacLine = tacHiddens + tacSmalls + tacCaps + tacSmalls + tacHiddens + "\n";
-  let toeLine = toeHiddens + toeSmalls + toeCaps + toeSmalls + toeHiddens + "\n";
-  let borderLine = borderHiddens + borderSmalls + borderCaps + borderSmalls + borderHiddens + "\n";
-
-  let header = "\n" + borderLine + ticLine;
-  header    +=        borderLine + tacLine;
-  header    +=        borderLine + toeLine;
-  header    +=        borderLine; 
+  let header = "\n";
+  header += borderLine + ticLine;
+  header += borderLine + tacLine;
+  header += borderLine + toeLine;
+  header += borderLine; 
   return header;
 };
 
 const generateHeader3 = function() {
-  let a = color("red"    , "XOX");
-  let b = color("green"  , "OXO");
-  let c = color("yellow" , "XOX");
-  let d = color("blue"   , "OXO");
-  let e = color("violet" , "XOX");
-  let f = color("cyan"   , "OXO");
-  let g = color("white"  , "XOX");
-  let l = "|";
-  let repeatedXO = l+a+l+b+l+c+l+d+l+e+l+f+l+g;
-  let repeatedOX = l+d+l+e+l+f+l+g+l+a+l+b+l+c;
-  let XOline = repeatedXO + repeatedXO + repeatedXO + repeatedXO + l + "\n";
-  let OXline = repeatedOX + repeatedOX + repeatedOX + repeatedOX + l + "\n";
+  let tic    = color("yellow", "   | t | i | c |   ");
+  let tac    = color("yellow", "   | t | a | c |   ");
+  let toe    = color("yellow", "   | t | o | e |   ");
+  let border = color("green",  "   +---+---+---+   ");
 
-  let header = "\n\n"+ XOline + OXline + XOline +"\n";
+  let ticLine    = repeatString(tic, 5) + "\n";
+  let tacLine    = repeatString(tac, 5) + "\n";
+  let toeLine    = repeatString(toe, 5) + "\n";
+  let borderLine = repeatString(border, 5) + "\n";
+
+  let header = "\n";
+  header += borderLine + ticLine;
+  header += borderLine + tacLine;
+  header += borderLine + toeLine;
+  header += borderLine; 
   return header;
-}
+};
+
+const generateHeader4 = function() {
+  let tic    = color("green", "   | † | ¡ | ç |   ");
+  let tac    = color("green", "   | † | å | ç |   ");
+  let toe    = color("green", "   | † | ø | ç |   ");
+  let border = color("red",   "   +---+---+---+   ");
+
+  let ticLine    = repeatString(tic, 5) + "\n";
+  let tacLine    = repeatString(tac, 5) + "\n";
+  let toeLine    = repeatString(toe, 5) + "\n";
+  let borderLine = repeatString(border, 5) + "\n";
+
+  let header = "\n";
+  header += borderLine + ticLine;
+  header += borderLine + tacLine;
+  header += borderLine + toeLine;
+  header += borderLine; 
+  return header;
+};
 
 module.exports = { color, selectHeader };
