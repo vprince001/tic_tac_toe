@@ -10,6 +10,7 @@ const retrieveGameData = function() {
   game.board.data = createBoardData();
   game.board.frame = createBoard(game.board.data);
 
+  console.clear();
   console.log(game.header);
   game.modeNumber = readGameModeInput();
   
