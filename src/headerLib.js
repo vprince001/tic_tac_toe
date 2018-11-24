@@ -110,4 +110,4 @@ const generateHeader4 = function() {
   return header;
 };
 
-module.exports = { color, selectHeader };
+module.exports = { color, repeatChar, selectHeader };

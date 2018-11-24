@@ -1,6 +1,6 @@
 const readline = require('readline-sync');
 
-const { color, selectHeader } = require('./headerLib.js');
+const { color, repeatChar, selectHeader } = require('./headerLib.js');
 
 const retrieveGameData = function() {
   let game = {};
@@ -29,7 +29,7 @@ const createBoardData = function() {
 };
 
 const createBoard = function (boardData){
-  let spaces = repeatCharacter(" ", 41);
+  let spaces = repeatChar(" ", 41);
 
   let firstLine  = createLine(spaces, boardData[1], boardData[2], boardData[3]);
   let secondLine = createLine(spaces, boardData[4], boardData[5], boardData[6]);
@@ -38,10 +38,6 @@ const createBoard = function (boardData){
 
   let board = border + firstLine + border + secondLine + border + thirdLine + border;
   return board;
-};
-
-const repeatCharacter = function(character, times) {
-  return new Array(times).fill(character).join("");
 };
 
 const createLine = function(spaces, first, second, third) {
@@ -106,10 +102,10 @@ const readFirstSymbol = function(player1Name) {
 
 const assignSymbols = function(firstSymbol, players) {
   
-  players.player1.symbol = color("red",firstSymbol);
+  players.player1.symbol = color("red", firstSymbol);
   players.player2.symbol = color("yellow", "x");
 
-  if(players.player1.symbol = color("red", "x")) {
+  if(players.player1.symbol == color("red", "x")) {
     players.player2.symbol = color("yellow", "o");
   }
   return players;
@@ -235,14 +231,14 @@ const isSubset = function(superSet, subsetCandidate) {
 };
 
 const declareWinner = function(name, frame, header) {
-  let hashLine = repeatCharacter("#", 37);
+  let hashLine = repeatChar("#", 37);
   updateScreen(header, frame);
   console.log(hashLine, name, "won the game !", hashLine);
   return 10;
 };
 
 const declareDraw = function(frame, header) {
-  let hashLine = color("violet", repeatCharacter("#", 42));
+  let hashLine = color("violet", repeatChar("#", 42));
   let drawMsg = color("green","IT'S A DRAW");
   let msg = hashLine + drawMsg + hashLine;
 
