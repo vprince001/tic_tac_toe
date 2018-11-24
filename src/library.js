@@ -2,6 +2,27 @@ const readline = require('readline-sync');
 
 const { color, selectHeader } = require('./headerLib.js');
 
+const retrieveGameData = function() {
+  let game = {};
+  game.header = selectHeader();
+
+  game.board = {};
+  game.board.data = createBoardData();
+  game.board.frame = createBoard(game.board.data);
+
+  console.log(game.header);
+  game.modeNumber = readGameModeInput();
+  
+  game.players = { player1 : {}, player2 : {} };
+  game.players = readPlayerName(game.modeNumber, game.players);
+
+  let firstSymbol = readFirstSymbol(game.players.player1.name);
+  game.players = assignSymbols(firstSymbol, game.players);
+
+  game.players = createInputArrays(game.players);
+  return game;
+};
+
 const createBoardData = function() {
   return new Array(10).fill(" ");
 };
@@ -11,11 +32,15 @@ const createBoard = function (boardData){
 
   let firstLine  = createLine(spaces, boardData[1], boardData[2], boardData[3]);
   let secondLine = createLine(spaces, boardData[4], boardData[5], boardData[6]);
-  let thirdLine  = createLine(spaces ,boardData[7], boardData[8], boardData[9]);
+  let thirdLine  = createLine(spaces, boardData[7], boardData[8], boardData[9]);
   let border = spaces + color("violet", "+---+---+---+") + "\n";
 
   let board = border + firstLine + border + secondLine + border + thirdLine + border;
   return board;
+};
+
+const repeatCharacter = function(character, times) {
+  return new Array(times).fill(character).join("");
 };
 
 const createLine = function(spaces, first, second, third) {
@@ -26,10 +51,6 @@ const createLine = function(spaces, first, second, third) {
   line    += color("violet", " |")  + "\n";
 
   return line;
-};
-
-const repeatCharacter = function(character, times) {
-  return new Array(times).fill(character).join("");
 };
 
 const readGameModeInput = function() {
@@ -46,9 +67,9 @@ const readGameModeInput = function() {
 };
 
 const readPlayerName = function(modeNumber, players) {
-  let retrieveNames = readDoublePlayersName;
-  if(modeNumber == '1') {
-    retrieveNames = readSinglePlayerName;
+  let retrieveNames = readSinglePlayerName;
+  if(modeNumber == '2') {
+    retrieveNames = readDoublePlayersName;
   }
   return retrieveNames(players);
 };
@@ -93,43 +114,17 @@ const assignSymbols = function(firstSymbol, players) {
   return players;
 };
 
-const switchTurn = function() {
-  let player = { 0 : 'player1', 1 : 'player2' }
-  let turn = 0;
-
-  return function() {
-    turn = 1-turn;
-    return player[turn];
-  }
-};
-
-const retrieveGameData = function() {
-  let game = {};
-  game.header = selectHeader();
-
-  game.board = {};
-  game.board.data = createBoardData();
-  game.board.frame = createBoard(game.board.data);
-
-  console.log(game.header);
-  game.modeNumber = readGameModeInput();
-  
-  game.players = { player1 : {}, player2 : {} };
-  game.players = readPlayerName(game.modeNumber, game.players);
-
-  let firstSymbol = readFirstSymbol(game.players.player1.name);
-  game.players = assignSymbols(firstSymbol, game.players);
-
-  game.players = createInputArrays(game.players);
-  updateScreen(game.header, game.board.frame);
-
-  return game;
+const createInputArrays = function(players) {
+  players.player1.inputs = [];
+  players.player2.inputs = [];
+  return players;
 };
 
 const startGame = function(game) {
 
   game.turn = 'player1';
   let switchPlayer = switchTurn();
+  updateScreen(game.header, game.board.frame);
 
   for(let currentMove = 1; currentMove < 10; currentMove++) {
 
@@ -155,6 +150,22 @@ const startGame = function(game) {
   }
 };
 
+const switchTurn = function() {
+  let player = { 0 : 'player1', 1 : 'player2' }
+  let turn = 0;
+
+  return function() {
+    turn = 1-turn;
+    return player[turn];
+  }
+};
+
+const updateScreen = function(header, frame) {
+  console.clear();
+  console.log(header);
+  console.log(frame);
+};
+
 const executePlayerMove = function(game, name, symbol, turn) {
   input = +readPlayerInput(name, symbol);
   
@@ -165,12 +176,6 @@ const executePlayerMove = function(game, name, symbol, turn) {
   
   insertSymbol(game, turn, symbol, input);
   return game;
-};
-
-const updateScreen = function(header, frame) {
-  console.clear();
-  console.log(header);
-  console.log(frame);
 };
 
 const readPlayerInput = function(name, symbol) {
@@ -195,16 +200,24 @@ const isBlockFree = function(input, boardData, players) {
   return status;
 };
 
-const createInputArrays = function(players) {
-  players.player1.inputs = [];
-  players.player2.inputs = [];
-  return players;
-}
-
 const insertSymbol = function(game, turn, symbol, input) {
   game.board.data[input] = symbol;
   game.players[turn].inputs.push(input);
   game.board.frame = createBoard(game.board.data);
+};
+
+const executeBotMove = function(game, name, symbol, turn) {
+  let input = +Math.ceil(Math.random()*9);
+
+  while(!isBlockFree(input, game.board.data, game.players)) {
+    input = +Math.ceil(Math.random()*9);
+  }
+
+  insertSymbol(game, turn, symbol, input);
+  
+  updateScreen(game.header, game.board.frame);
+  readline.question(name+" input is "+input+". Press enter to continue.");
+  return game;
 };
 
 const checkWin = function(playerInputs) {
@@ -225,24 +238,6 @@ const declareWinner = function(name, frame, header) {
   updateScreen(header, frame);
   console.log(hashLine, name, "won the game !", hashLine);
   return 10;
-};
-
-const isEven = function(number) {
-  return number%2 == 0;
-};
-
-const executeBotMove = function(game, name, symbol, turn) {
-  let input = +Math.ceil(Math.random()*9);
-
-  while(!isBlockFree(input, game.board.data, game.players)) {
-    input = +Math.ceil(Math.random()*9);
-  }
-
-  insertSymbol(game, turn, symbol, input);
-  
-  updateScreen(game.header, game.board.frame);
-  readline.question(name+" input is "+input+". Press enter to continue.");
-  return game;
 };
 
 const declareDraw = function(frame, header) {
