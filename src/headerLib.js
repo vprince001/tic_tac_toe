@@ -12,6 +12,14 @@ const color = function(selectedColor,text) {
   return colors[selectedColor] + text + colors.white;
 };
 
+const repeatChar = function(character, times) {
+  return new Array(times).fill(character).join("");
+}
+
+const repeatString = function(string, times) {
+  return new Array(times).fill(string).join("");
+};
+
 const selectHeader = function() {
   let randomNumer = Math.ceil(Math.random()*4);
 
@@ -27,7 +35,7 @@ const selectHeader = function() {
 
 const generateHeader1 = function() {
 
-  let dashes = color("violet", "≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈");
+  let dashes = color("violet", repeatChar("≈", 21));
   let l = color("yellow", "|");
   let borderLine = dashes + l;
   borderLine += repeatString(borderLine, 3);
@@ -43,14 +51,6 @@ const generateHeader1 = function() {
   header += repeatString(borderLine,2) + nameLine;
   header += repeatString(borderLine,2);
   return header;
-};
-
-const repeatString = function(string, times) {
-  let line = string;
-  for( let i = 1; i < times; i++) {
-    line += string;
-  }
-  return line;
 };
 
 const generateHeader2 = function() {
