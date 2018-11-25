@@ -106,9 +106,26 @@ const createInputArrays = function(players) {
   return players;
 };
 
+const switchTurn = function() {
+  let player = { 0 : 'player1', 1 : 'player2' }
+  let turn = 0;
+
+  return function() {
+    turn = 1-turn;
+    return player[turn];
+  }
+};
+
+const updateScreen = function(banner, frame) {
+  console.clear();
+  console.log(banner);
+  console.log(frame);
+};
+
 module.exports = { 
   color, repeatChar, repeatString,
   createBoardData, createBoard, createLine,
   readGameModeInput, readSinglePlayerName, readDoublePlayersName,
-  readFirstSymbol, assignSymbols, createInputArrays
+  readFirstSymbol, assignSymbols, createInputArrays,
+  switchTurn, updateScreen
 };
