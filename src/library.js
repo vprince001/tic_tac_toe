@@ -1,17 +1,17 @@
 const readline = require('readline-sync');
 
-const { color, repeatChar, selectHeader } = require('./headerLib.js');
+const { color, repeatChar, selectBanner } = require('./bannerLib.js');
 
 const retrieveGameData = function() {
   let game = {};
-  game.header = selectHeader();
+  game.banner = selectBanner();
 
   game.board = {};
   game.board.data = createBoardData();
   game.board.frame = createBoard(game.board.data);
 
   console.clear();
-  console.log(game.header);
+  console.log(game.banner);
   game.modeNumber = readGameModeInput();
   
   game.players = { player1 : {}, player2 : {} };
@@ -121,7 +121,7 @@ const startGame = function(game) {
 
   game.turn = 'player1';
   let switchPlayer = switchTurn();
-  updateScreen(game.header, game.board.frame);
+  updateScreen(game.banner, game.board.frame);
 
   for(let currentMove = 1; currentMove < 10; currentMove++) {
 
@@ -134,14 +134,14 @@ const startGame = function(game) {
     }
 
     game = executeMove(game, name, symbol, game.turn);
-    updateScreen(game.header, game.board.frame);
+    updateScreen(game.banner, game.board.frame);
 
     if(checkWin(game.players[game.turn].inputs)) { 
-      currentMove = declareWinner(name, game.board.frame, game.header)
+      currentMove = declareWinner(name, game.board.frame, game.banner)
     }
 
     if(currentMove == 9) {
-      declareDraw(game.board.frame, game.header);
+      declareDraw(game.board.frame, game.banner);
     }
     game.turn = switchPlayer();
   }
@@ -157,9 +157,9 @@ const switchTurn = function() {
   }
 };
 
-const updateScreen = function(header, frame) {
+const updateScreen = function(banner, frame) {
   console.clear();
-  console.log(header);
+  console.log(banner);
   console.log(frame);
 };
 
@@ -212,7 +212,7 @@ const executeBotMove = function(game, name, symbol, turn) {
 
   insertSymbol(game, turn, symbol, input);
   
-  updateScreen(game.header, game.board.frame);
+  updateScreen(game.banner, game.board.frame);
   readline.question(name+" input is "+input+". Press enter to continue.");
   return game;
 };
@@ -230,14 +230,14 @@ const isSubset = function(superSet, subsetCandidate) {
   })
 };
 
-const declareWinner = function(name, frame, header) {
+const declareWinner = function(name, frame, banner) {
   let hashLine = repeatChar("#", 37);
-  updateScreen(header, frame);
+  updateScreen(banner, frame);
   console.log(hashLine, name, "won the game !", hashLine);
   return 10;
 };
 
-const declareDraw = function(frame, header) {
+const declareDraw = function(frame, banner) {
   let hashLine = color("violet", repeatChar("#", 42));
   let drawMsg = color("green","IT'S A DRAW");
   let msg = hashLine + drawMsg + hashLine;

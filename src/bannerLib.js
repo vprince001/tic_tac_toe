@@ -19,20 +19,20 @@ const repeatString = function(string, times) {
   return new Array(times).fill(string).join("");
 };
 
-const selectHeader = function() {
+const selectBanner = function() {
   let randomNumer = Math.ceil(Math.random()*4);
 
-  let header = {
-    1 : generateHeader1(),
-    2 : generateHeader2(),
-    3 : generateHeader3(),
-    4 : generateHeader4()
+  let banner = {
+    1 : generateBanner1(),
+    2 : generateBanner2(),
+    3 : generateBanner3(),
+    4 : generateBanner4()
   };
 
-  return header[randomNumer];
+  return banner[randomNumer];
 };
 
-const generateHeader1 = function() {
+const generateBanner1 = function() {
 
   let dashes = color("violet", repeatChar("≈", 21));
   let l = color("yellow", "|");
@@ -46,12 +46,11 @@ const generateHeader1 = function() {
   let nameLine = specialName + l + simpleName + l;
   nameLine += nameLine + specialName + "\n";
 
-  let header = "\n";
-  header += repeatString(borderLine,2) + nameLine;
-  header += repeatString(borderLine,2);
-  return header;
+  let banner = "\n";
+  banner += repeatString(borderLine,2) + nameLine;
+  banner += repeatString(borderLine,2);
+  return banner;
 };
-
 
 const createLines = function(tic, tac, toe, border) {
   let lines = {};
@@ -62,46 +61,46 @@ const createLines = function(tic, tac, toe, border) {
   return lines;
 };
 
-const getHeader = function(lines) {
-  let header = "\n";
-  header += lines.borderLine + lines.ticLine;
-  header += lines.borderLine + lines.tacLine;
-  header += lines.borderLine + lines.toeLine;
-  header += lines.borderLine; 
-  return header;
+const getBanner = function(lines) {
+  let banner = "\n";
+  banner += lines.borderLine + lines.ticLine;
+  banner += lines.borderLine + lines.tacLine;
+  banner += lines.borderLine + lines.toeLine;
+  banner += lines.borderLine; 
+  return banner;
 };
 
-const generateHeader2 = function() {
+const generateBanner2 = function() {
   let tic    = color("red",    "   | T | I | C |   ");
   let tac    = color("red",    "   | T | A | C |   ");
   let toe    = color("red",    "   | T | O | E |   ");
   let border = color("yellow", "   +---+---+---+   ");
 
   let lines = createLines(tic, tac, toe, border);
-  let header = getHeader(lines);
-  return header;
+  let banner = getBanner(lines);
+  return banner;
 };
 
-const generateHeader3 = function() {
+const generateBanner3 = function() {
   let tic    = color("yellow", "   | t | i | c |   ");
   let tac    = color("yellow", "   | t | a | c |   ");
   let toe    = color("yellow", "   | t | o | e |   ");
   let border = color("green",  "   +---+---+---+   ");
 
   let lines = createLines(tic, tac, toe, border);
-  let header = getHeader(lines);
-  return header;
+  let banner = getBanner(lines);
+  return banner;
 };
 
-const generateHeader4 = function() {
+const generateBanner4 = function() {
   let tic    = color("green", "   | † | ¡ | ç |   ");
   let tac    = color("green", "   | † | å | ç |   ");
   let toe    = color("green", "   | † | ø | ç |   ");
   let border = color("red",   "   +---+---+---+   ");
 
   let lines = createLines(tic, tac, toe, border);
-  let header = getHeader(lines);
-  return header;
+  let banner = getBanner(lines);
+  return banner;
 };
 
-module.exports = { color, repeatChar, selectHeader };
+module.exports = { color, repeatChar, selectBanner };
