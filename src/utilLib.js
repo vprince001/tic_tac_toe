@@ -13,10 +13,6 @@ const color = function(selectedColor,text) {
   return colors[selectedColor] + text + colors.white;
 };
 
-const repeatChar = function(character, times) {
-  return new Array(times).fill(character).join("");
-};
-
 const repeatString = function(string, times) {
   return new Array(times).fill(string).join("");
 };
@@ -24,19 +20,7 @@ const repeatString = function(string, times) {
 const createBoardData = function() {
   return new Array(10).fill(" ");
 };
-/*
-const createBoard = function (boardData){
-  let spaces = repeatChar(" ", 41);
 
-  let firstLine  = createLine(spaces, boardData[1], boardData[2], boardData[3]);
-  let secondLine = createLine(spaces, boardData[4], boardData[5], boardData[6]);
-  let thirdLine  = createLine(spaces, boardData[7], boardData[8], boardData[9]);
-  let border = spaces + color("violet", "+---+---+---+") + "\n";
-
-  let board = border + firstLine + border + secondLine + border + thirdLine + border;
-  return board;
-};
-*/
 const createLine = function(spaces, first, second, third) {
   let line = spaces;
   line    += color("violet", "| ")  + first;
@@ -151,7 +135,7 @@ const isSubset = function(superSet, subsetCandidate) {
 };
 
 module.exports = { 
-  color, repeatChar, repeatString,
+  color, repeatString,
   createBoardData, createLine, readGameModeInput,
   readSinglePlayerName, readDoublePlayersName,
   readFirstSymbol, assignSymbols, createInputArrays,

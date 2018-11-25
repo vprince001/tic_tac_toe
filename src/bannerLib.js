@@ -1,4 +1,4 @@
-const { color, repeatChar, repeatString } = require("./utilLib.js");
+const { color, repeatString } = require("./utilLib.js");
 
 const selectBanner = function() {
   let randomNumer = Math.ceil(Math.random()*4);
@@ -15,7 +15,7 @@ const selectBanner = function() {
 
 const generateBanner1 = function() {
 
-  let dashes = color("violet", repeatChar("≈", 21));
+  let dashes = color("violet", repeatString("≈", 21));
   let l = color("yellow", "|");
   let borderLine = dashes + l;
   borderLine += repeatString(borderLine, 3);
@@ -84,4 +84,4 @@ const generateBanner4 = function() {
   return banner;
 };
 
-module.exports = { color, repeatChar, selectBanner };
+module.exports = { selectBanner };

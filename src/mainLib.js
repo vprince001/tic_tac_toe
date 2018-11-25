@@ -1,7 +1,7 @@
 const readline = require("readline-sync");
 
 const { 
-  color, repeatChar, createBoardData,
+  color, repeatString, createBoardData,
   createLine, readGameModeInput, readSinglePlayerName,
   readDoublePlayersName, readFirstSymbol, assignSymbols,
   createInputArrays, switchTurn, updateScreen,
@@ -32,7 +32,7 @@ const retrieveGameData = function() {
 };
 
 const createBoard = function (boardData){
-  let spaces = repeatChar(" ", 41);
+  let spaces = repeatString(" ", 41);
 
   let firstLine  = createLine(spaces, boardData[1], boardData[2], boardData[3]);
   let secondLine = createLine(spaces, boardData[4], boardData[5], boardData[6]);
@@ -121,14 +121,14 @@ const checkWin = function(playerInputs) {
 };
 
 const declareWinner = function(name, frame, banner) {
-  let starLine = color("violet", repeatChar("*", 37));
+  let starLine = color("violet", repeatString("*", 37));
   let winMsg = color("red" , "won the game !"); 
   console.log(starLine, name, winMsg, starLine);
   return 10;
 };
 
 const declareDraw = function(frame, banner) {
-  let starLine = color("violet", repeatChar("*", 42));
+  let starLine = color("violet", repeatString("*", 42));
   let drawMsg = color("green"," IT'S A DRAW ");
   let msg = starLine + drawMsg + starLine;
 
