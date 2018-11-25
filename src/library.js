@@ -1,6 +1,6 @@
 const readline = require('readline-sync');
 
-const { color, repeatChar } = require("./utilLib.js");
+const { color, repeatChar, createBoardData } = require("./utilLib.js");
 const { selectBanner } = require('./bannerLib.js');
 
 const retrieveGameData = function() {
@@ -25,9 +25,9 @@ const retrieveGameData = function() {
   return game;
 };
 
-const createBoardData = function() {
-  return new Array(10).fill(" ");
-};
+//const createBoardData = function() {
+//  return new Array(10).fill(" ");
+//};
 
 const createBoard = function (boardData){
   let spaces = repeatChar(" ", 41);

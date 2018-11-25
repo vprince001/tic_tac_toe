@@ -19,4 +19,11 @@ const repeatString = function(string, times) {
   return new Array(times).fill(string).join("");
 };
 
-module.exports = { color, repeatChar, repeatString };
+const createBoardData = function() {
+  return new Array(10).fill(" ");
+};
+
+module.exports = { 
+  color, repeatChar, repeatString,
+  createBoardData
+};
