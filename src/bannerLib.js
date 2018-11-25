@@ -1,8 +1,4 @@
-const { color, repeatChar } = require("./utilLib.js");
-
-const repeatString = function(string, times) {
-  return new Array(times).fill(string).join("");
-};
+const { color, repeatChar, repeatString } = require("./utilLib.js");
 
 const selectBanner = function() {
   let randomNumer = Math.ceil(Math.random()*4);

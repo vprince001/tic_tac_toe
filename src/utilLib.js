@@ -15,4 +15,8 @@ const repeatChar = function(character, times) {
   return new Array(times).fill(character).join("");
 };
 
-module.exports = { color, repeatChar };
+const repeatString = function(string, times) {
+  return new Array(times).fill(string).join("");
+};
+
+module.exports = { color, repeatChar, repeatString };
