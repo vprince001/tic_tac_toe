@@ -60,8 +60,25 @@ const readGameModeInput = function() {
   return modeNumber;
 };
 
+const readSinglePlayerName = function(players) {
+  let player1msg = "\nPlease enter your name : ";
+
+  players.player1.name = color("blue", readline.question(player1msg));
+  players.player2.name = color("green", "Computer");
+  return players;
+};
+
+const readDoublePlayersName = function(players) {
+  let player1msg = "\nPlease enter first player's name : ";
+  let player2msg = "Player enter second player's name : ";
+
+  players.player1.name = color("blue", readline.question(player1msg));
+  players.player2.name = color("green", readline.question(player2msg));
+  return players;
+};
+
 module.exports = { 
   color, repeatChar, repeatString,
   createBoardData, createBoard, createLine,
-  readGameModeInput
+  readGameModeInput, readSinglePlayerName, readDoublePlayersName
 };

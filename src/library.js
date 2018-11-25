@@ -2,7 +2,8 @@ const readline = require("readline-sync");
 
 const { 
   color, repeatChar, createBoardData,
-  createBoard, createLine, readGameModeInput } = require("./utilLib.js");
+  createBoard, createLine, readGameModeInput,
+  readSinglePlayerName, readDoublePlayersName } = require("./utilLib.js");
 
 const { selectBanner } = require('./bannerLib.js');
 
@@ -28,42 +29,12 @@ const retrieveGameData = function() {
   return game;
 };
 
-//const readGameModeInput = function() {
-//  let validInputMsg = "Please enter 1 for single player and 2 for double player\n";
-//  let invalidInputMsg = "Only two modes are available. ";
-//  invalidInputMsg += "You can either choose 1 or 2.\n";
-//
-//  let modeNumber = readline.question(validInputMsg).toString();
-//
-//  while(modeNumber != '1' && modeNumber != '2') {
-//    modeNumber = readline.question(invalidInputMsg);
-//  }
-//  return modeNumber;
-//};
-
 const readPlayerName = function(modeNumber, players) {
   let retrieveNames = readSinglePlayerName;
   if(modeNumber == '2') {
     retrieveNames = readDoublePlayersName;
   }
   return retrieveNames(players);
-};
-
-const readSinglePlayerName = function(players) {
-  let player1msg = "\nPlease enter your name : ";
-
-  players.player1.name = color("blue", readline.question(player1msg));
-  players.player2.name = color("green", "Computer");
-  return players;
-};
-
-const readDoublePlayersName = function(players) {
-  let player1msg = "\nPlease enter first player's name : ";
-  let player2msg = "Player enter second player's name : ";
-
-  players.player1.name = color("blue", readline.question(player1msg));
-  players.player2.name = color("green", readline.question(player2msg));
-  return players;
 };
 
 const readFirstSymbol = function(player1Name) {
@@ -191,7 +162,7 @@ const executeBotMove = function(game, name, symbol, turn) {
   insertSymbol(game, turn, symbol, input);
   
   updateScreen(game.banner, game.board.frame);
-  readline.question(name+" input is "+input+". Press enter to continue.");
+  console.log(name+" input is "+input+".");
   return game;
 };
 
