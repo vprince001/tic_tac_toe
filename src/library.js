@@ -3,7 +3,8 @@ const readline = require("readline-sync");
 const { 
   color, repeatChar, createBoardData,
   createBoard, createLine, readGameModeInput,
-  readSinglePlayerName, readDoublePlayersName } = require("./utilLib.js");
+  readSinglePlayerName, readDoublePlayersName,
+  readFirstSymbol, assignSymbols, createInputArrays } = require("./utilLib.js");
 
 const { selectBanner } = require('./bannerLib.js');
 
@@ -35,35 +36,6 @@ const readPlayerName = function(modeNumber, players) {
     retrieveNames = readDoublePlayersName;
   }
   return retrieveNames(players);
-};
-
-const readFirstSymbol = function(player1Name) {
-  let msgForSymbol = "Choose your symbol either 'x' or 'o' : ";
-  let msgForInvalidSymbol = "Valid symbols are 'x' or 'o'. Please choose one from these only : "
-  
-  let firstSymbol = readline.question("\n"+player1Name+", "+msgForSymbol);
-  
-  while(firstSymbol != "x" && firstSymbol != "o") {
-     firstSymbol = readline.question("\n"+player1Name+", "+msgForInvalidSymbol);
-  }
-  return firstSymbol;
-};
-
-const assignSymbols = function(firstSymbol, players) {
-  
-  players.player1.symbol = color("red", firstSymbol);
-  players.player2.symbol = color("yellow", "x");
-
-  if(players.player1.symbol == color("red", "x")) {
-    players.player2.symbol = color("yellow", "o");
-  }
-  return players;
-};
-
-const createInputArrays = function(players) {
-  players.player1.inputs = [];
-  players.player2.inputs = [];
-  return players;
 };
 
 const startGame = function(game) {
