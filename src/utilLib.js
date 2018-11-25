@@ -1,3 +1,5 @@
+const readline = require("readline-sync");
+
 const color = function(selectedColor,text) {
   let colors = { 
     red    : "\033[31m",
@@ -45,7 +47,21 @@ const createLine = function(spaces, first, second, third) {
   return line;
 };
 
+const readGameModeInput = function() {
+  let validInputMsg = "Please enter 1 for single player and 2 for double player\n";
+  let invalidInputMsg = "Only two modes are available. ";
+  invalidInputMsg += "You can either choose 1 or 2.\n";
+
+  let modeNumber = readline.question(validInputMsg).toString();
+
+  while(modeNumber != '1' && modeNumber != '2') {
+    modeNumber = readline.question(invalidInputMsg);
+  }
+  return modeNumber;
+};
+
 module.exports = { 
   color, repeatChar, repeatString,
-  createBoardData, createBoard, createLine
+  createBoardData, createBoard, createLine,
+  readGameModeInput
 };

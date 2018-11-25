@@ -1,8 +1,8 @@
-const readline = require('readline-sync');
+const readline = require("readline-sync");
 
 const { 
   color, repeatChar, createBoardData,
-  createBoard, createLine } = require("./utilLib.js");
+  createBoard, createLine, readGameModeInput } = require("./utilLib.js");
 
 const { selectBanner } = require('./bannerLib.js');
 
@@ -28,18 +28,18 @@ const retrieveGameData = function() {
   return game;
 };
 
-const readGameModeInput = function() {
-  let validInputMsg = "Please enter 1 for single player and 2 for double player\n";
-  let invalidInputMsg = "Only two modes are available. ";
-  invalidInputMsg += "You can either choose 1 or 2.\n";
-
-  let modeNumber = readline.question(validInputMsg).toString();
-
-  while(modeNumber != '1' && modeNumber != '2') {
-    modeNumber = readline.question(invalidInputMsg);
-  }
-  return modeNumber;
-};
+//const readGameModeInput = function() {
+//  let validInputMsg = "Please enter 1 for single player and 2 for double player\n";
+//  let invalidInputMsg = "Only two modes are available. ";
+//  invalidInputMsg += "You can either choose 1 or 2.\n";
+//
+//  let modeNumber = readline.question(validInputMsg).toString();
+//
+//  while(modeNumber != '1' && modeNumber != '2') {
+//    modeNumber = readline.question(invalidInputMsg);
+//  }
+//  return modeNumber;
+//};
 
 const readPlayerName = function(modeNumber, players) {
   let retrieveNames = readSinglePlayerName;
