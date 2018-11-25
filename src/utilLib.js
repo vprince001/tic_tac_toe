@@ -24,7 +24,7 @@ const repeatString = function(string, times) {
 const createBoardData = function() {
   return new Array(10).fill(" ");
 };
-
+/*
 const createBoard = function (boardData){
   let spaces = repeatChar(" ", 41);
 
@@ -36,7 +36,7 @@ const createBoard = function (boardData){
   let board = border + firstLine + border + secondLine + border + thirdLine + border;
   return board;
 };
-
+*/
 const createLine = function(spaces, first, second, third) {
   let line = spaces;
   line    += color("violet", "| ")  + first;
@@ -152,8 +152,8 @@ const isSubset = function(superSet, subsetCandidate) {
 
 module.exports = { 
   color, repeatChar, repeatString,
-  createBoardData, createBoard, createLine,
-  readGameModeInput, readSinglePlayerName, readDoublePlayersName,
+  createBoardData, createLine, readGameModeInput,
+  readSinglePlayerName, readDoublePlayersName,
   readFirstSymbol, assignSymbols, createInputArrays,
   switchTurn, updateScreen, readPlayerInput,
   isBlockFree, isSubset

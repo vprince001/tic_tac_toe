@@ -2,12 +2,10 @@ const readline = require("readline-sync");
 
 const { 
   color, repeatChar, createBoardData,
-  createBoard, createLine, readGameModeInput,
-  readSinglePlayerName, readDoublePlayersName,
-  readFirstSymbol, assignSymbols, createInputArrays,
-  switchTurn, updateScreen, readPlayerInput,
-  isBlockFree, isSubset } = require("./utilLib.js");
-
+  createLine, readGameModeInput, readSinglePlayerName,
+  readDoublePlayersName, readFirstSymbol, assignSymbols,
+  createInputArrays, switchTurn, updateScreen,
+  readPlayerInput, isBlockFree, isSubset } = require("./utilLib.js");
 
 const { selectBanner } = require('./bannerLib.js');
 
@@ -31,6 +29,18 @@ const retrieveGameData = function() {
 
   game.players = createInputArrays(game.players);
   return game;
+};
+
+const createBoard = function (boardData){
+  let spaces = repeatChar(" ", 41);
+
+  let firstLine  = createLine(spaces, boardData[1], boardData[2], boardData[3]);
+  let secondLine = createLine(spaces, boardData[4], boardData[5], boardData[6]);
+  let thirdLine  = createLine(spaces, boardData[7], boardData[8], boardData[9]);
+  let border = spaces + color("violet", "+---+---+---+") + "\n";
+
+  let board = border + firstLine + border + secondLine + border + thirdLine + border;
+  return board;
 };
 
 const readPlayerName = function(modeNumber, players) {

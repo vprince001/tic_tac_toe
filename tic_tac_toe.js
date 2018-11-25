@@ -1,4 +1,4 @@
-const { retrieveGameData, startGame } = require('./src/library.js');
+const { retrieveGameData, startGame } = require('./src/mainLib.js');
 
 const main = function() {
   game = retrieveGameData(); 
