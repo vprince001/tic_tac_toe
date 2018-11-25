@@ -72,7 +72,7 @@ const readPlayerName = function(modeNumber, players) {
 };
 
 const readSinglePlayerName = function(players) {
-  let player1msg = "Please enter your name : ";
+  let player1msg = "\nPlease enter your name : ";
 
   players.player1.name = color("blue", readline.question(player1msg));
   players.player2.name = color("green", "Computer");
@@ -80,7 +80,7 @@ const readSinglePlayerName = function(players) {
 };
 
 const readDoublePlayersName = function(players) {
-  let player1msg = "Please enter first player's name : ";
+  let player1msg = "\nPlease enter first player's name : ";
   let player2msg = "Player enter second player's name : ";
 
   players.player1.name = color("blue", readline.question(player1msg));
@@ -134,7 +134,6 @@ const startGame = function(game) {
     }
 
     game = executeMove(game, name, symbol, game.turn);
-    updateScreen(game.banner, game.board.frame);
 
     if(checkWin(game.players[game.turn].inputs)) { 
       currentMove = declareWinner(name, game.board.frame, game.banner)
@@ -172,6 +171,7 @@ const executePlayerMove = function(game, name, symbol, turn) {
   }
   
   insertSymbol(game, turn, symbol, input);
+  updateScreen(game.banner, game.board.frame);
   return game;
 };
 
@@ -231,16 +231,16 @@ const isSubset = function(superSet, subsetCandidate) {
 };
 
 const declareWinner = function(name, frame, banner) {
-  let hashLine = repeatChar("#", 37);
-  updateScreen(banner, frame);
-  console.log(hashLine, name, "won the game !", hashLine);
+  let starLine = color("violet", repeatChar("*", 37));
+  let winMsg = color("red" , "won the game !"); 
+  console.log(starLine, name, winMsg, starLine);
   return 10;
 };
 
 const declareDraw = function(frame, banner) {
-  let hashLine = color("violet", repeatChar("#", 42));
-  let drawMsg = color("green","IT'S A DRAW");
-  let msg = hashLine + drawMsg + hashLine;
+  let starLine = color("violet", repeatChar("*", 42));
+  let drawMsg = color("green"," IT'S A DRAW ");
+  let msg = starLine + drawMsg + starLine;
 
   console.log(msg);
 };
