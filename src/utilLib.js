@@ -122,10 +122,39 @@ const updateScreen = function(banner, frame) {
   console.log(frame);
 };
 
+const readPlayerInput = function(name, symbol) {
+  let msgForInput = "Enter number between 1 to 9\n";
+  let msgForInvalidInput = "Entered game is not valid. Please enter number between 1 to 9 only.\n";
+  console.log("\nTurn of",color('blue',name),":",symbol);
+
+  let input = readline.questionInt(msgForInput);
+  while(input < 1 || input > 9) {
+    input = readline.questionInt(msgForInvalidInput);
+  }
+
+  return input;
+};
+
+const isBlockFree = function(input, boardData, players) {
+  let status = true;
+
+  if(boardData[input] == players.player1.symbol || boardData[input] == players.player2.symbol) {
+    status = false;
+  }
+  return status;
+};
+
+const isSubset = function(superSet, subsetCandidate) {
+  return subsetCandidate.every(function(element) {
+    return superSet.includes(element);
+  })
+};
+
 module.exports = { 
   color, repeatChar, repeatString,
   createBoardData, createBoard, createLine,
   readGameModeInput, readSinglePlayerName, readDoublePlayersName,
   readFirstSymbol, assignSymbols, createInputArrays,
-  switchTurn, updateScreen
+  switchTurn, updateScreen, readPlayerInput,
+  isBlockFree, isSubset
 };

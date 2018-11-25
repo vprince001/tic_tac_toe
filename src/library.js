@@ -5,7 +5,9 @@ const {
   createBoard, createLine, readGameModeInput,
   readSinglePlayerName, readDoublePlayersName,
   readFirstSymbol, assignSymbols, createInputArrays,
-  switchTurn, updateScreen } = require("./utilLib.js");
+  switchTurn, updateScreen, readPlayerInput,
+  isBlockFree, isSubset } = require("./utilLib.js");
+
 
 const { selectBanner } = require('./bannerLib.js');
 
@@ -81,28 +83,6 @@ const executePlayerMove = function(game, name, symbol, turn) {
   return game;
 };
 
-const readPlayerInput = function(name, symbol) {
-  let msgForInput = "Enter number between 1 to 9\n";
-  let msgForInvalidInput = "Entered game is not valid. Please enter number between 1 to 9 only.\n";
-  console.log("\nTurn of",color('blue',name),":",symbol);
-
-  let input = readline.questionInt(msgForInput);
-  while(input < 1 || input > 9) {
-    input = readline.questionInt(msgForInvalidInput);
-  }
-
-  return input;
-};
-
-const isBlockFree = function(input, boardData, players) {
-  let status = true;
-
-  if(boardData[input] == players.player1.symbol || boardData[input] == players.player2.symbol) {
-    status = false;
-  }
-  return status;
-};
-
 const insertSymbol = function(game, turn, symbol, input) {
   game.board.data[input] = symbol;
   game.players[turn].inputs.push(input);
@@ -127,12 +107,6 @@ const checkWin = function(playerInputs) {
   let winConditions = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]];
   return winConditions.some(function(element) {
     return isSubset(playerInputs, element)
-  })
-};
-
-const isSubset = function(superSet, subsetCandidate) {
-  return subsetCandidate.every(function(element) {
-    return superSet.includes(element);
   })
 };
 
