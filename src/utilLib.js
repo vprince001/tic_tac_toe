@@ -11,4 +11,8 @@ const color = function(selectedColor,text) {
   return colors[selectedColor] + text + colors.white;
 };
 
-module.exports = { color };
+const repeatChar = function(character, times) {
+  return new Array(times).fill(character).join("");
+};
+
+module.exports = { color, repeatChar };

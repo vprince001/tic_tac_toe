@@ -1,8 +1,4 @@
-const { color } = require("./utilLib.js");
-
-const repeatChar = function(character, times) {
-  return new Array(times).fill(character).join("");
-}
+const { color, repeatChar } = require("./utilLib.js");
 
 const repeatString = function(string, times) {
   return new Array(times).fill(string).join("");
