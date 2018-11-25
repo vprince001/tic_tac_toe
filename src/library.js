@@ -1,6 +1,9 @@
 const readline = require('readline-sync');
 
-const { color, repeatChar, createBoardData } = require("./utilLib.js");
+const { 
+  color, repeatChar, createBoardData,
+  createBoard, createLine } = require("./utilLib.js");
+
 const { selectBanner } = require('./bannerLib.js');
 
 const retrieveGameData = function() {
@@ -23,32 +26,6 @@ const retrieveGameData = function() {
 
   game.players = createInputArrays(game.players);
   return game;
-};
-
-//const createBoardData = function() {
-//  return new Array(10).fill(" ");
-//};
-
-const createBoard = function (boardData){
-  let spaces = repeatChar(" ", 41);
-
-  let firstLine  = createLine(spaces, boardData[1], boardData[2], boardData[3]);
-  let secondLine = createLine(spaces, boardData[4], boardData[5], boardData[6]);
-  let thirdLine  = createLine(spaces, boardData[7], boardData[8], boardData[9]);
-  let border = spaces + color("violet", "+---+---+---+") + "\n";
-
-  let board = border + firstLine + border + secondLine + border + thirdLine + border;
-  return board;
-};
-
-const createLine = function(spaces, first, second, third) {
-  let line = spaces;
-  line    += color("violet", "| ")  + first;
-  line    += color("violet", " | ") + second;
-  line    += color("violet", " | ") + third;
-  line    += color("violet", " |")  + "\n";
-
-  return line;
 };
 
 const readGameModeInput = function() {
