@@ -1,6 +1,7 @@
 const readline = require('readline-sync');
 
-const { color, repeatChar, selectBanner } = require('./bannerLib.js');
+const { color } = require("./utilLib.js");
+const { repeatChar, selectBanner } = require('./bannerLib.js');
 
 const retrieveGameData = function() {
   let game = {};
