@@ -17,8 +17,8 @@ const repeatString = function(string, times) {
   return new Array(times).fill(string).join("");
 };
 
-const createBoardData = function() {
-  return new Array(10).fill(" ");
+const createArray = function(size, character) {
+  return new Array(size).fill(character);
 };
 
 const createLine = function(spaces, first, second, third) {
@@ -44,23 +44,23 @@ const readGameModeInput = function() {
   return modeNumber;
 };
 
-const readSinglePlayerName = function(players) {
-  let player1msg = "\nPlease enter your name : ";
-
-  players.player1.name = color("blue", readline.question(player1msg));
-  players.player2.name = color("green", "Computer");
-  return players;
+const readFirstName = function(gameMode) {
+  let msg = "\nPlease enter your name : ";
+  if(gameMode == 2) { 
+    msg = "\nPlease enter first player's name : ";
+  }
+  return color("blue", readline.question(msg));
 };
 
-const readDoublePlayersName = function(players) {
-  let player1msg = "\nPlease enter first player's name : ";
-  let player2msg = "Player enter second player's name : ";
-
-  players.player1.name = color("blue", readline.question(player1msg));
-  players.player2.name = color("green", readline.question(player2msg));
-  return players;
+const readSecondName = function(gameMode) {
+  let name = color("green", "Computer");
+  if(gameMode == 2) {
+    let msg = "Player enter second player's name : ";
+    name = color("green", readline.question(msg));
+  }
+  return name;
 };
-
+  
 const readFirstSymbol = function(player1Name) {
   let msgForSymbol = "Choose your symbol either 'x' or 'o' : ";
   let msgForInvalidSymbol = "Valid symbols are 'x' or 'o'. Please choose one from these only : "
@@ -70,24 +70,16 @@ const readFirstSymbol = function(player1Name) {
   while(firstSymbol != "x" && firstSymbol != "o") {
      firstSymbol = readline.question("\n"+player1Name+", "+msgForInvalidSymbol);
   }
-  return firstSymbol;
+  return color("red", firstSymbol);
 };
 
-const assignSymbols = function(firstSymbol, players) {
-  
-  players.player1.symbol = color("red", firstSymbol);
-  players.player2.symbol = color("yellow", "x");
+const assignSecondSymbol = function(firstSymbol) {
+  let secondSymbol = color("yellow", "o");
 
-  if(players.player1.symbol == color("red", "x")) {
-    players.player2.symbol = color("yellow", "o");
+  if(firstSymbol == color("red", "o")) {
+    secondSymbol = color("yellow", "x");
   }
-  return players;
-};
-
-const createInputArrays = function(players) {
-  players.player1.inputs = [];
-  players.player2.inputs = [];
-  return players;
+  return secondSymbol;
 };
 
 const switchTurn = function() {
@@ -109,7 +101,7 @@ const updateScreen = function(banner, frame) {
 const readPlayerInput = function(name, symbol) {
   let msgForInput = "Enter number between 1 to 9\n";
   let msgForInvalidInput = "Entered game is not valid. Please enter number between 1 to 9 only.\n";
-  console.log("\nTurn of",color('blue',name),":",symbol);
+  console.log("\nTurn of",name,":",symbol);
 
   let input = readline.questionInt(msgForInput);
   while(input < 1 || input > 9) {
@@ -136,9 +128,10 @@ const isSubset = function(superSet, subsetCandidate) {
 
 module.exports = { 
   color, repeatString,
-  createBoardData, createLine, readGameModeInput,
-  readSinglePlayerName, readDoublePlayersName,
-  readFirstSymbol, assignSymbols, createInputArrays,
-  switchTurn, updateScreen, readPlayerInput,
-  isBlockFree, isSubset
+  createArray, createLine,
+  readGameModeInput, isSubset,
+  readFirstName, readSecondName,
+  readFirstSymbol, assignSecondSymbol,
+  switchTurn, updateScreen,
+  readPlayerInput, isBlockFree
 };

@@ -2,7 +2,7 @@ const { equal, deepEqual } = require("assert");
 
 const { 
   color, repeatString,
-  createBoardData, createLine 
+  createArray, createLine 
 } = require("../src/utilLib.js");
 
 describe("color", function() {
@@ -53,10 +53,18 @@ describe("repeatString", function() {
 
 });
 
-describe("createBoardData", function() {
+describe("createArray", function() {
 
-  it("should return array of size 10 containig 1 space string element", function() {
-    deepEqual(createBoardData(), [' ',' ',' ',' ',' ',' ',' ',' ',' ',' ']);
+  it("should return an empty array for 0 and a string as arguments", function() {
+    deepEqual(createArray(0, 'hello'), []);
+  });
+
+  it("should return an array of size 1 of given element", function() {
+    deepEqual(createArray(1, 'hello'), [ "hello" ]);
+  });
+
+  it("should return an array of size 5 of given element", function() {
+    deepEqual(createArray(5, 'hi'), [ "hi","hi","hi","hi","hi" ]);
   });
 
 });

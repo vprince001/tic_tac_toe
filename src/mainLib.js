@@ -1,33 +1,35 @@
 const readline = require("readline-sync");
 
 const { 
-  color, repeatString, createBoardData,
-  createLine, readGameModeInput, readSinglePlayerName,
-  readDoublePlayersName, readFirstSymbol, assignSymbols,
-  createInputArrays, switchTurn, updateScreen,
-  readPlayerInput, isBlockFree, isSubset } = require("./utilLib.js");
+  color, repeatString,
+  createArray, createLine,
+  readGameModeInput, readPlayerInput,
+  readFirstName, readSecondName,
+  readFirstSymbol, assignSecondSymbol,
+  switchTurn, updateScreen,
+  isBlockFree, isSubset } = require("./utilLib.js");
 
 const { selectBanner } = require('./bannerLib.js');
 
 const retrieveGameData = function() {
-  let game = {};
-  game.banner = selectBanner();
+  let game = { banner : selectBanner() };
 
-  game.board = {};
-  game.board.data = createBoardData();
+  game.board = { data : createArray(10, " ") };
   game.board.frame = createBoard(game.board.data);
 
   console.clear();
   console.log(game.banner);
-  game.modeNumber = readGameModeInput();
+  game.gameMode = readGameModeInput();
   
   game.players = { player1 : {}, player2 : {} };
-  game.players = readPlayerName(game.modeNumber, game.players);
+  game.players.player1.name = readFirstName(game.gameMode);
+  game.players.player2.name = readSecondName(game.gameMode);
 
-  let firstSymbol = readFirstSymbol(game.players.player1.name);
-  game.players = assignSymbols(firstSymbol, game.players);
+  game.players.player1.symbol = readFirstSymbol(game.players.player1.name);
+  game.players.player2.symbol = assignSecondSymbol(game.players.player1.symbol);
 
-  game.players = createInputArrays(game.players);
+  game.players.player1.inputs = [];
+  game.players.player2.inputs = [];
   return game;
 };
 
@@ -41,14 +43,6 @@ const createBoard = function (boardData){
 
   let board = border + firstLine + border + secondLine + border + thirdLine + border;
   return board;
-};
-
-const readPlayerName = function(modeNumber, players) {
-  let retrieveNames = readSinglePlayerName;
-  if(modeNumber == '2') {
-    retrieveNames = readDoublePlayersName;
-  }
-  return retrieveNames(players);
 };
 
 const startGame = function(game) {
