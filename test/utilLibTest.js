@@ -2,7 +2,8 @@ const { equal, deepEqual } = require("assert");
 
 const { 
   color, repeatString,
-  createArray, createLine 
+  createArray, createLine,
+  assignSecondSymbol
 } = require("../src/utilLib.js");
 
 describe("color", function() {
@@ -76,6 +77,18 @@ describe("createLine", function() {
   let expectedOutput = " "+v+"| "+w+"A"+v+" | "+w+"B"+v+" | "+w+"C"+v+" |"+w+"\n";
   it("should return a concatenated string of given inputs with violet '|' in between", function() {
     equal(createLine(" ", "A", "B", "C"), expectedOutput);
+  });
+
+});
+
+describe("assignSecondSymbol", function() {
+
+  it("should return yellow o", function() {
+    equal(assignSecondSymbol(color("red", "x")), color("yellow", "o"));
+  });
+
+  it("should return yellow x", function() {
+    equal(assignSecondSymbol(color("red", "o")), color("yellow", "x"));
   });
 
 });
