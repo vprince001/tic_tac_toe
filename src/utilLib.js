@@ -1,16 +1,27 @@
 const readline = require("readline-sync");
 
-const color = function(selectedColor,text) {
-  let colors = { 
+const font = function(selectedColor, text, style) {
+  let fontStyle = { 
     red    : "\033[31m",
     green  : "\033[32m",
     yellow : "\033[33m",
     blue   : "\033[34m",
     violet : "\033[35m",
     cyan   : "\033[36m",
-    white  : "\033[37m"
+    white  : "\033[37m",
+    b      : "\033[1m",
+    i      : "\033[3m",
+    u      : "\033[4m",
   };
-  return colors[selectedColor] + text + colors.white;
+
+  let result;
+  if(style) {
+    result  = fontStyle[style] + fontStyle[selectedColor];
+    result += text + "\033[0m";
+    return result;
+  }
+
+  return fontStyle[selectedColor] + text + "\033[0m";
 };
 
 const repeatString = function(string, times) {
@@ -23,10 +34,10 @@ const createArray = function(size, character) {
 
 const createLine = function(spaces, first, second, third) {
   let line = spaces;
-  line    += color("violet", "| ")  + first;
-  line    += color("violet", " | ") + second;
-  line    += color("violet", " | ") + third;
-  line    += color("violet", " |")  + "\n";
+  line    += font("violet", "| ")  + first;
+  line    += font("violet", " | ") + second;
+  line    += font("violet", " | ") + third;
+  line    += font("violet", " |")  + "\n";
 
   return line;
 };
@@ -49,14 +60,14 @@ const readFirstName = function(gameMode) {
   if(gameMode == 2) { 
     msg = "\nPlease enter first player's name : ";
   }
-  return color("blue", readline.question(msg));
+  return font("blue", readline.question(msg));
 };
 
 const readSecondName = function(gameMode) {
-  let name = color("green", "Computer");
+  let name = font("green", "Computer");
   if(gameMode == 2) {
     let msg = "Player enter second player's name : ";
-    name = color("green", readline.question(msg));
+    name = font("green", readline.question(msg));
   }
   return name;
 };
@@ -70,14 +81,14 @@ const readFirstSymbol = function(player1Name) {
   while(firstSymbol != "x" && firstSymbol != "o") {
      firstSymbol = readline.question("\n"+player1Name+", "+msgForInvalidSymbol);
   }
-  return color("red", firstSymbol);
+  return font("red", firstSymbol);
 };
 
 const assignSecondSymbol = function(firstSymbol) {
-  let secondSymbol = color("yellow", "o");
+  let secondSymbol = font("yellow", "o");
 
-  if(firstSymbol == color("red", "o")) {
-    secondSymbol = color("yellow", "x");
+  if(firstSymbol == font("red", "o")) {
+    secondSymbol = font("yellow", "x");
   }
   return secondSymbol;
 };
@@ -127,7 +138,7 @@ const isSubset = function(superSet, subsetCandidate) {
 };
 
 module.exports = { 
-  color, repeatString,
+  font, repeatString,
   createArray, createLine,
   readGameModeInput, isSubset,
   readFirstName, readSecondName,

@@ -1,7 +1,7 @@
 const readline = require("readline-sync");
 
 const { 
-  color, repeatString,
+  font, repeatString,
   createArray, createLine,
   readGameModeInput, readPlayerInput,
   readFirstName, readSecondName,
@@ -39,7 +39,7 @@ const createBoard = function (boardData){
   let firstLine  = createLine(spaces, boardData[1], boardData[2], boardData[3]);
   let secondLine = createLine(spaces, boardData[4], boardData[5], boardData[6]);
   let thirdLine  = createLine(spaces, boardData[7], boardData[8], boardData[9]);
-  let border = spaces + color("violet", "+---+---+---+") + "\n";
+  let border = spaces + font("violet", "+---+---+---+") + "\n";
 
   let board = border + firstLine + border + secondLine + border + thirdLine + border;
   return board;
@@ -57,7 +57,7 @@ const startGame = function(game) {
     let symbol = game.players[game.turn].symbol;
     let executeMove = executePlayerMove;
 
-    if(name == color("green", "Computer")) {
+    if(name == font("green", "Computer")) {
       executeMove = executeBotMove;
     }
 
@@ -115,15 +115,15 @@ const checkWin = function(playerInputs) {
 };
 
 const declareWinner = function(name, frame, banner) {
-  let starLine = color("violet", repeatString("*", 37));
-  let winMsg = color("red" , "won the game !"); 
+  let starLine = font("violet", repeatString("*", 37));
+  let winMsg = font("red" , "won the game !"); 
   console.log(starLine, name, winMsg, starLine);
   return 10;
 };
 
 const declareDraw = function(frame, banner) {
-  let starLine = color("violet", repeatString("*", 42));
-  let drawMsg = color("green"," IT'S A DRAW ");
+  let starLine = font("violet", repeatString("*", 42));
+  let drawMsg = font("green"," IT'S A DRAW ");
   let msg = starLine + drawMsg + starLine;
 
   console.log(msg);
