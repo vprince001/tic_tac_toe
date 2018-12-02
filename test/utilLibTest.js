@@ -1,39 +1,51 @@
 const { equal, deepEqual } = require("assert");
 
 const { 
-  color, repeatString,
+  font, repeatString,
   createArray, createLine,
   assignSecondSymbol
 } = require("../src/utilLib.js");
 
-describe("color", function() {
+describe("font", function() {
 
   it("should return red text for red as first argument", function() {
-    equal(color("red", "hello"), "\033[31mhello\033[37m");
+    equal(font("red", "hello"), "\033[31mhello\033[0m");
   });
 
   it("should return green text for green as first argument", function() {
-    equal(color("green", "hello"), "\033[32mhello\033[37m");
+    equal(font("green", "hello"), "\033[32mhello\033[0m");
   });
 
   it("should return yellow text for yellow as first argument", function() {
-    equal(color("yellow", "hello"), "\033[33mhello\033[37m");
+    equal(font("yellow", "hello"), "\033[33mhello\033[0m");
   });
 
   it("should return blue text for blue as first argument", function() {
-    equal(color("blue", "hello"), "\033[34mhello\033[37m");
+    equal(font("blue", "hello"), "\033[34mhello\033[0m");
   });
 
   it("should return violet text for violet as first argument", function() {
-    equal(color("violet", "hello"), "\033[35mhello\033[37m");
+    equal(font("violet", "hello"), "\033[35mhello\033[0m");
   });
 
   it("should return cyan text for cyan as first argument", function() {
-    equal(color("cyan", "hello"), "\033[36mhello\033[37m");
+    equal(font("cyan", "hello"), "\033[36mhello\033[0m");
   });
 
   it("should return white text for white as first argument", function() {
-    equal(color("white", "hello"), "\033[37mhello\033[37m");
+    equal(font("white", "hello"), "\033[37mhello\033[0m");
+  });
+
+  it("should return bold text for b as third argument", function() {
+    equal(font("red", "hello", "b"), "\033[1m\033[31mhello\033[0m");
+  });
+
+  it("should return italic text for i as third argument", function() {
+    equal(font("green", "hello", "i"), "\033[3m\033[32mhello\033[0m");
+  });
+
+  it("should return underline text for u as third argument", function() {
+    equal(font("yellow", "hello", "u"), "\033[4m\033[33mhello\033[0m");
   });
 
 });
@@ -72,11 +84,16 @@ describe("createArray", function() {
 
 describe("createLine", function() {
 
-  let v = "\033[35m"
-  let w = "\033[37m"
-  let expectedOutput = " "+v+"| "+w+"A"+v+" | "+w+"B"+v+" | "+w+"C"+v+" |"+w+"\n";
+  let s = " ";
+  let v = "\033[35m" , r = "\033[0m"
+  let l1 = "| ", l2 = " | ", l3 = " |";
+  let A = "A", B = "B", C = "C";
+
+  let expectedOutput = s + v + l1 + r + A + v + l2 + r;
+  expectedOutput    += B + v + l2 + r + C + v + l3 + r + "\n";
+
   it("should return a concatenated string of given inputs with violet '|' in between", function() {
-    equal(createLine(" ", "A", "B", "C"), expectedOutput);
+    equal(createLine(s, A, B, C), expectedOutput);
   });
 
 });
@@ -84,11 +101,11 @@ describe("createLine", function() {
 describe("assignSecondSymbol", function() {
 
   it("should return yellow o", function() {
-    equal(assignSecondSymbol(color("red", "x")), color("yellow", "o"));
+    equal(assignSecondSymbol(font("red", "x")), font("yellow", "o"));
   });
 
   it("should return yellow x", function() {
-    equal(assignSecondSymbol(color("red", "o")), color("yellow", "x"));
+    equal(assignSecondSymbol(font("red", "o")), font("yellow", "x"));
   });
 
 });
