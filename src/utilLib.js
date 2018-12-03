@@ -14,14 +14,13 @@ const font = function(selectedColor, text, style) {
     u      : "\033[4m",
   };
 
-  let result;
+  let result = fontStyle[selectedColor] + text + "\033[0m";
   if(style) {
-    result  = fontStyle[style] + fontStyle[selectedColor];
-    result += text + "\033[0m";
+    result  = fontStyle[style] + result; 
     return result;
   }
 
-  return fontStyle[selectedColor] + text + "\033[0m";
+  return result;
 };
 
 const repeatString = function(string, times) {
