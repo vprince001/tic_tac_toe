@@ -1,51 +1,51 @@
 const { equal, deepEqual } = require("assert");
 
 const { 
-  font, repeatString,
+  changeFont, repeatString,
   createArray, createLine,
   assignSecondSymbol
 } = require("../src/utilLib.js");
 
-describe("font", function() {
+describe("changeFont", function() {
 
   it("should return red text for red as first argument", function() {
-    equal(font("red", "hello"), "\033[31mhello\033[0m");
+    equal(changeFont("red", "hello"), "\033[31mhello\033[0m");
   });
 
   it("should return green text for green as first argument", function() {
-    equal(font("green", "hello"), "\033[32mhello\033[0m");
+    equal(changeFont("green", "hello"), "\033[32mhello\033[0m");
   });
 
   it("should return yellow text for yellow as first argument", function() {
-    equal(font("yellow", "hello"), "\033[33mhello\033[0m");
+    equal(changeFont("yellow", "hello"), "\033[33mhello\033[0m");
   });
 
   it("should return blue text for blue as first argument", function() {
-    equal(font("blue", "hello"), "\033[34mhello\033[0m");
+    equal(changeFont("blue", "hello"), "\033[34mhello\033[0m");
   });
 
   it("should return violet text for violet as first argument", function() {
-    equal(font("violet", "hello"), "\033[35mhello\033[0m");
+    equal(changeFont("violet", "hello"), "\033[35mhello\033[0m");
   });
 
   it("should return cyan text for cyan as first argument", function() {
-    equal(font("cyan", "hello"), "\033[36mhello\033[0m");
+    equal(changeFont("cyan", "hello"), "\033[36mhello\033[0m");
   });
 
   it("should return white text for white as first argument", function() {
-    equal(font("white", "hello"), "\033[37mhello\033[0m");
+    equal(changeFont("white", "hello"), "\033[37mhello\033[0m");
   });
 
   it("should return bold text for b as third argument", function() {
-    equal(font("red", "hello", "b"), "\033[1m\033[31mhello\033[0m");
+    equal(changeFont("red", "hello", "b"), "\033[1m\033[31mhello\033[0m");
   });
 
   it("should return italic text for i as third argument", function() {
-    equal(font("green", "hello", "i"), "\033[3m\033[32mhello\033[0m");
+    equal(changeFont("green", "hello", "i"), "\033[3m\033[32mhello\033[0m");
   });
 
   it("should return underline text for u as third argument", function() {
-    equal(font("yellow", "hello", "u"), "\033[4m\033[33mhello\033[0m");
+    equal(changeFont("yellow", "hello", "u"), "\033[4m\033[33mhello\033[0m");
   });
 
 });
@@ -101,11 +101,11 @@ describe("createLine", function() {
 describe("assignSecondSymbol", function() {
 
   it("should return yellow o", function() {
-    equal(assignSecondSymbol(font("red", "x")), font("yellow", "o"));
+    equal(assignSecondSymbol(changeFont("red", "x")), changeFont("yellow", "o"));
   });
 
   it("should return yellow x", function() {
-    equal(assignSecondSymbol(font("red", "o")), font("yellow", "x"));
+    equal(assignSecondSymbol(changeFont("red", "o")), changeFont("yellow", "x"));
   });
 
 });

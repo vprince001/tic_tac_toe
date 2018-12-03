@@ -1,7 +1,7 @@
 const readline = require("readline-sync");
 
-const font = function(selectedColor, text, style) {
-  let fontStyle = { 
+const changeFont = function(selectedColor, text, fontStyle) {
+  let colors = { 
     red    : "\033[31m",
     green  : "\033[32m",
     yellow : "\033[33m",
@@ -9,14 +9,17 @@ const font = function(selectedColor, text, style) {
     violet : "\033[35m",
     cyan   : "\033[36m",
     white  : "\033[37m",
-    b      : "\033[1m",
-    i      : "\033[3m",
-    u      : "\033[4m",
   };
 
-  let result = fontStyle[selectedColor] + text + "\033[0m";
-  if(style) {
-    result  = fontStyle[style] + result; 
+  let fontStyles = {
+    b : "\033[1m",
+    i : "\033[3m",
+    u : "\033[4m",
+  };
+
+  let result = colors[selectedColor] + text + "\033[0m";
+  if(fontStyle) {
+    result  = fontStyles[fontStyle] + result; 
     return result;
   }
 
@@ -33,10 +36,10 @@ const createArray = function(size, character) {
 
 const createLine = function(spaces, first, second, third) {
   let line = spaces;
-  line    += font("violet", "| ")  + first;
-  line    += font("violet", " | ") + second;
-  line    += font("violet", " | ") + third;
-  line    += font("violet", " |")  + "\n";
+  line    += changeFont("violet", "| ")  + first;
+  line    += changeFont("violet", " | ") + second;
+  line    += changeFont("violet", " | ") + third;
+  line    += changeFont("violet", " |")  + "\n";
 
   return line;
 };
@@ -59,14 +62,14 @@ const readFirstName = function(gameMode) {
   if(gameMode == 2) { 
     msg = "\nPlease enter first player's name : ";
   }
-  return font("blue", readline.question(msg));
+  return changeFont("blue", readline.question(msg));
 };
 
 const readSecondName = function(gameMode) {
-  let name = font("green", "Computer");
+  let name = changeFont("green", "Computer");
   if(gameMode == 2) {
     let msg = "Player enter second player's name : ";
-    name = font("green", readline.question(msg));
+    name = changeFont("green", readline.question(msg));
   }
   return name;
 };
@@ -80,14 +83,14 @@ const readFirstSymbol = function(player1Name) {
   while(firstSymbol != "x" && firstSymbol != "o") {
      firstSymbol = readline.question("\n"+player1Name+", "+msgForInvalidSymbol);
   }
-  return font("red", firstSymbol);
+  return changeFont("red", firstSymbol);
 };
 
 const assignSecondSymbol = function(firstSymbol) {
-  let secondSymbol = font("yellow", "o");
+  let secondSymbol = changeFont("yellow", "o");
 
-  if(firstSymbol == font("red", "o")) {
-    secondSymbol = font("yellow", "x");
+  if(firstSymbol == changeFont("red", "o")) {
+    secondSymbol = changeFont("yellow", "x");
   }
   return secondSymbol;
 };
@@ -137,7 +140,7 @@ const isSubset = function(superSet, subsetCandidate) {
 };
 
 module.exports = { 
-  font, repeatString,
+  changeFont, repeatString,
   createArray, createLine,
   readGameModeInput, isSubset,
   readFirstName, readSecondName,
