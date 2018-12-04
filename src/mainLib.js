@@ -8,8 +8,8 @@ const {
   readFirstSymbol, assignSecondSymbol,
   switchTurn, updateScreen,
   isBlockFree, isSubset,
-  readFile, writeFile
-} = require("./utilLib.js");
+  readFile, writeFile, 
+  addNameRecord } = require("./utilLib.js");
 
 const { selectBanner } = require('./bannerLib.js');
 
@@ -29,13 +29,13 @@ const retrieveGameData = function() {
   game.players = { player1 : {}, player2 : {} };
 
   let player1Name = readFirstName(game.gameMode);
-  logData[player1Name] = {};
   game.players.player1.name = changeFont('blue', player1Name) 
 
   let player2Name = readSecondName(game.gameMode);
-  logData[player2Name] = {};
   game.players.player2.name = changeFont('green', player2Name);
 
+  logData = addNameRecord(logData, player1Name);
+  logData = addNameRecord(logData, player2Name);
   writeFile(game.logFile, logData);
 
   game.players.player1.symbol = readFirstSymbol(game.players.player1.name);

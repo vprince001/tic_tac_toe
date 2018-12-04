@@ -148,6 +148,13 @@ const writeFile = function(logFile, logData) {
   fs.writeFileSync(logFile, JSON.stringify(logData));
 };
 
+const addNameRecord = function(logData, name) {
+  if(!logData[name]){
+    logData[name] = {};
+  }
+  return logData;
+};
+
 module.exports = { 
   changeFont, repeatString,
   createArray, createLine,
@@ -156,5 +163,6 @@ module.exports = {
   readFirstSymbol, assignSecondSymbol,
   switchTurn, updateScreen,
   readPlayerInput, isBlockFree,
-  readFile, writeFile
+  readFile, writeFile,
+  addNameRecord
 };
