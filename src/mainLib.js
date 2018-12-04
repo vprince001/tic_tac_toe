@@ -9,13 +9,13 @@ const {
   switchTurn, updateScreen,
   isBlockFree, isSubset,
   readFile, writeFile, 
-  addNameRecord } = require("./utilLib.js");
+  addPlayerRecord } = require("./utilLib.js");
 
 const { selectBanner } = require('./bannerLib.js');
 
 const retrieveGameData = function() {
   let game = { banner : selectBanner() };
-  game.logFile = "./src/.log.txt";
+  game.logFile = "./src/.log.json";
 
   game.board = { data : createArray(10, " ") };
   game.board.frame = createBoard(game.board.data);
@@ -24,8 +24,6 @@ const retrieveGameData = function() {
   console.log(game.banner);
   game.gameMode = readGameModeInput();
   
-  let logData = readFile(game.logFile);
-
   game.players = { player1 : {}, player2 : {} };
 
   let player1Name = readFirstName(game.gameMode);
@@ -34,8 +32,21 @@ const retrieveGameData = function() {
   let player2Name = readSecondName(game.gameMode);
   game.players.player2.name = changeFont('green', player2Name);
 
-  logData = addNameRecord(logData, player1Name);
-  logData = addNameRecord(logData, player2Name);
+  let logData = readFile(game.logFile);
+  logData = addPlayerRecord(logData, player1Name);
+  logData = addPlayerRecord(logData, player2Name);
+
+  logData[player1Name].VSPlayer += 1;
+  logData[player2Name].VSPlayer += 1;
+
+  if(game.gameMode == 1) {
+    logData[player1Name].VSBot += 1;
+    logData[player1Name].VSPlayer -= 1;
+  }
+
+  logData[player1Name].gamesPlayed += 1;
+  logData[player2Name].gamesPlayed += 1;
+
   writeFile(game.logFile, logData);
 
   game.players.player1.symbol = readFirstSymbol(game.players.player1.name);
@@ -59,6 +70,7 @@ const createBoard = function (boardData){
 };
 
 const startGame = function(game) {
+  let logData = readFile(game.logFile);
 
   game.turn = 'player1';
   let switchPlayer = switchTurn();
@@ -78,13 +90,19 @@ const startGame = function(game) {
 
     if(checkWin(game.players[game.turn].inputs)) { 
       currentMove = declareWinner(name, game.board.frame, game.banner)
+      name = name.slice(5, name.length-4);
+      logData[name].gamesWon += 1;
     }
 
     if(currentMove == 9) {
       declareDraw(game.board.frame, game.banner);
+      name = name.slice(5, name.length-4);
+      logData[name].gamesDraw += 1;
     }
     game.turn = switchPlayer();
   }
+  writeFile(game.logFile, logData)
+
 };
 
 const executePlayerMove = function(game, name, symbol, turn) {

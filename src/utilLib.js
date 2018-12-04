@@ -1,7 +1,7 @@
 const readline = require("readline-sync");
 const fs = require("fs");
 
-const changeFont = function(selectedColor, text, fontStyle) {
+changeFont = function(selectedColor, text, fontStyle) {
   let colors = { 
     red    : "\033[31m",
     green  : "\033[32m",
@@ -148,9 +148,15 @@ const writeFile = function(logFile, logData) {
   fs.writeFileSync(logFile, JSON.stringify(logData));
 };
 
-const addNameRecord = function(logData, name) {
-  if(!logData[name]){
-    logData[name] = {};
+const addPlayerRecord = function(logData, name) {
+  if(!logData[name]) {
+    logData[name] = { 
+      "gamesPlayed" : 0, 
+      "gamesWon"    : 0,
+      "gamesDraw"   : 0,
+      "VSBot"       : 0,
+      "VSPlayer"    : 0
+    };
   }
   return logData;
 };
@@ -164,5 +170,5 @@ module.exports = {
   switchTurn, updateScreen,
   readPlayerInput, isBlockFree,
   readFile, writeFile,
-  addNameRecord
+  addPlayerRecord
 };
