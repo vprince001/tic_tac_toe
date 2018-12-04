@@ -1,4 +1,5 @@
 const readline = require("readline-sync");
+const fs = require("fs");
 
 const changeFont = function(selectedColor, text, fontStyle) {
   let colors = { 
@@ -62,14 +63,14 @@ const readFirstName = function(gameMode) {
   if(gameMode == 2) { 
     msg = "\nPlease enter first player's name : ";
   }
-  return changeFont("blue", readline.question(msg));
+  return readline.question(msg);
 };
 
 const readSecondName = function(gameMode) {
-  let name = changeFont("green", "Computer");
+  let name = "Computer";
   if(gameMode == 2) {
     let msg = "Player enter second player's name : ";
-    name = changeFont("green", readline.question(msg));
+    name = readline.question(msg);
   }
   return name;
 };
@@ -139,6 +140,14 @@ const isSubset = function(superSet, subsetCandidate) {
   })
 };
 
+const readFile = function(logFile) {
+  return JSON.parse(fs.readFileSync(logFile, 'utf8')); 
+};
+
+const writeFile = function(logFile, logData) {
+  fs.writeFileSync(logFile, JSON.stringify(logData));
+};
+
 module.exports = { 
   changeFont, repeatString,
   createArray, createLine,
@@ -146,5 +155,6 @@ module.exports = {
   readFirstName, readSecondName,
   readFirstSymbol, assignSecondSymbol,
   switchTurn, updateScreen,
-  readPlayerInput, isBlockFree
+  readPlayerInput, isBlockFree,
+  readFile, writeFile
 };

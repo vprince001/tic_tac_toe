@@ -7,12 +7,15 @@ const {
   readFirstName, readSecondName,
   readFirstSymbol, assignSecondSymbol,
   switchTurn, updateScreen,
-  isBlockFree, isSubset } = require("./utilLib.js");
+  isBlockFree, isSubset,
+  readFile, writeFile
+} = require("./utilLib.js");
 
 const { selectBanner } = require('./bannerLib.js');
 
 const retrieveGameData = function() {
   let game = { banner : selectBanner() };
+  game.logFile = "./src/.log.txt";
 
   game.board = { data : createArray(10, " ") };
   game.board.frame = createBoard(game.board.data);
@@ -21,9 +24,19 @@ const retrieveGameData = function() {
   console.log(game.banner);
   game.gameMode = readGameModeInput();
   
+  let logData = readFile(game.logFile);
+
   game.players = { player1 : {}, player2 : {} };
-  game.players.player1.name = readFirstName(game.gameMode);
-  game.players.player2.name = readSecondName(game.gameMode);
+
+  let player1Name = readFirstName(game.gameMode);
+  logData[player1Name] = {};
+  game.players.player1.name = changeFont('blue', player1Name) 
+
+  let player2Name = readSecondName(game.gameMode);
+  logData[player2Name] = {};
+  game.players.player2.name = changeFont('green', player2Name);
+
+  writeFile(game.logFile, logData);
 
   game.players.player1.symbol = readFirstSymbol(game.players.player1.name);
   game.players.player2.symbol = assignSecondSymbol(game.players.player1.symbol);
