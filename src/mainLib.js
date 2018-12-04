@@ -15,10 +15,8 @@ const { selectBanner } = require('./bannerLib.js');
 
 const retrieveGameData = function() {
   let game = { banner : selectBanner() };
-  game.logFile = "./src/.log.json";
 
-  game.board = { data : createArray(10, " ") };
-  game.board.frame = createBoard(game.board.data);
+  game = retrieveBoard(game);
 
   console.clear();
   console.log(game.banner);
@@ -32,14 +30,26 @@ const retrieveGameData = function() {
   let player2Name = readSecondName(game.gameMode);
   game.players.player2.name = changeFont('green', player2Name);
 
-  let logData = readFile(game.logFile);
+  game.players.player1.symbol = readFirstSymbol(game.players.player1.name);
+  game.players.player2.symbol = assignSecondSymbol(game.players.player1.symbol);
+
+  game.players.player1.inputs = [];
+  game.players.player2.inputs = [];
+  createLogData(player1Name, player2Name, game.gameMode);
+  return game;
+};
+
+const createLogData = function(player1Name, player2Name, gameMode) {
+  let logFile = "./src/.log.json";
+  let logData = readFile(logFile);
+
   logData = addPlayerRecord(logData, player1Name);
   logData = addPlayerRecord(logData, player2Name);
 
   logData[player1Name].VSPlayer += 1;
   logData[player2Name].VSPlayer += 1;
 
-  if(game.gameMode == 1) {
+  if(gameMode == 1) {
     logData[player1Name].VSBot += 1;
     logData[player1Name].VSPlayer -= 1;
   }
@@ -47,13 +57,12 @@ const retrieveGameData = function() {
   logData[player1Name].gamesPlayed += 1;
   logData[player2Name].gamesPlayed += 1;
 
-  writeFile(game.logFile, logData);
+  writeFile(logFile, logData);
+};
 
-  game.players.player1.symbol = readFirstSymbol(game.players.player1.name);
-  game.players.player2.symbol = assignSecondSymbol(game.players.player1.symbol);
-
-  game.players.player1.inputs = [];
-  game.players.player2.inputs = [];
+const retrieveBoard = function(game) {
+  game.board = { data : createArray(10, " ") };
+  game.board.frame = createBoard(game.board.data);
   return game;
 };
 
@@ -70,7 +79,8 @@ const createBoard = function (boardData){
 };
 
 const startGame = function(game) {
-  let logData = readFile(game.logFile);
+  let logFile = "./src/.log.json";
+  let logData = readFile(logFile);
 
   game.turn = 'player1';
   let switchPlayer = switchTurn();
@@ -90,19 +100,21 @@ const startGame = function(game) {
 
     if(checkWin(game.players[game.turn].inputs)) { 
       currentMove = declareWinner(name, game.board.frame, game.banner)
-      name = name.slice(5, name.length-4);
-      logData[name].gamesWon += 1;
+      logData[removeColor(name)].gamesWon += 1;
     }
 
     if(currentMove == 9) {
       declareDraw(game.board.frame, game.banner);
-      name = name.slice(5, name.length-4);
-      logData[name].gamesDraw += 1;
+      logData[sliceName(name)].gamesDraw += 1;
     }
     game.turn = switchPlayer();
   }
-  writeFile(game.logFile, logData)
 
+  writeFile(logFile, logData)
+};
+
+const removeColor = function(string) {
+  return string.slice(5, string.length-4);
 };
 
 const executePlayerMove = function(game, name, symbol, turn) {
