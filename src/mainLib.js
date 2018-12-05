@@ -22,11 +22,11 @@ const initiateGame = function() {
 const displayOptions = function() {
   console.clear();
   let msg = "Please select any one of the given options : "
-  let optionsMsg = "1.Play Game\n2.Check your stats\n3.Exit\n\n"; 
-  let invalidMsg = "Valid inputs are 1, 2 and 3 only, Please try again.\n";
+  let optionsMsg = "1.Play Game\n2.Check your stats\n\n"; 
+  let invalidMsg = "Valid inputs are 1, and 2 only, Please try again.\n";
 
   let selectedOption = readline.questionInt(msg + "\n" + optionsMsg);
-  while(selectedOption < 1 || selectedOption > 3) {
+  while(selectedOption < 1 || selectedOption > 2) {
     selectedOption = readline.questionInt(invalidMsg);
   }
   return selectedOption;
@@ -36,7 +36,6 @@ const executeSelectedOption = function(selectedOption) {
   const options = {
     1 : playGame,
     2 : displayStats,
-    3 : exitGame
   };
 
   options[selectedOption]();
@@ -65,10 +64,6 @@ const displayStats = function() {
   
   console.log("No record found for this name");
   return 0;
-};
-
-const exitGame = function() {
-  process.exit();
 };
 
 const retrieveGameData = function() {
