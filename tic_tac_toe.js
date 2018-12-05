@@ -1,7 +1,7 @@
-const { showOptions } = require('./src/mainLib.js');
+const { initiateGame } = require('./src/mainLib.js');
 
 const main = function() {
-  showOptions();
+  initiateGame();
 };
 
 main();

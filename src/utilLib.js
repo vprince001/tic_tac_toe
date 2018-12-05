@@ -114,7 +114,7 @@ const updateScreen = function(banner, frame) {
 
 const readPlayerInput = function(name, symbol) {
   let msgForInput = "Enter number between 1 to 9\n";
-  let msgForInvalidInput = "Entered game is not valid. Please enter number between 1 to 9 only.\n";
+  let msgForInvalidInput = "Entered number is not valid. Please enter number between 1 to 9 only.\n";
   console.log("\nTurn of",name,":",symbol);
 
   let input = readline.questionInt(msgForInput);
