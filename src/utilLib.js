@@ -1,7 +1,7 @@
 const readline = require("readline-sync");
 const fs = require("fs");
 
-changeFont = function(selectedColor, text, fontStyle) {
+const changeFont = function(selectedColor, text, fontStyle) {
   let colors = { 
     red    : "\033[31m",
     green  : "\033[32m",

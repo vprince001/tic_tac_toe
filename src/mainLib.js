@@ -13,6 +13,24 @@ const {
 
 const { selectBanner } = require('./bannerLib.js');
 
+const showOptions = function() {
+  let msg = "Please select any one of the given options : "
+  let optionsMsg = "1.Play Game\n2.Check your stats\n3.quit\n"; 
+
+  let selectedOption = readline.questionInt(msg + "\n" + optionsMsg);
+
+  const options = {
+    1 : playGame,
+  };
+
+  options[selectedOption]();
+};
+
+const playGame = function() {
+  game = retrieveGameData();
+  startGame(game);
+};
+
 const retrieveGameData = function() {
   let game = { banner : selectBanner() };
 
@@ -172,4 +190,4 @@ const declareDraw = function(frame, banner) {
   console.log(msg);
 };
 
-module.exports = { retrieveGameData, startGame };
+module.exports = { showOptions };
