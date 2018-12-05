@@ -86,6 +86,8 @@ const createLogData = function(player1Name, player2Name, gameMode) {
   let logFile = "./src/.log.json";
   let logData = readFile(logFile);
 
+  player1Name = player1Name.toUpperCase();
+  player2Name = player2Name.toUpperCase();
   logData = addPlayerRecord(logData, player1Name);
   logData = addPlayerRecord(logData, player2Name);
 
@@ -143,12 +145,14 @@ const startGame = function(game) {
 
     if(checkWin(game.players[game.turn].inputs)) { 
       currentMove = declareWinner(name, game.board.frame, game.banner)
-      logData[removeColor(name)].gamesWon += 1;
+      name = removeColor(name).toUpperCase();
+      logData[name].gamesWon += 1;
     }
 
     if(currentMove == 9) {
       declareDraw(game.board.frame, game.banner);
-      logData[sliceName(name)].gamesDraw += 1;
+      name = removeColor(name).toUpperCase();
+      logData[name].gamesDraw += 1;
     }
     game.turn = switchPlayer();
   }
