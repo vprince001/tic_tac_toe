@@ -15,12 +15,13 @@ const { selectBanner } = require('./bannerLib.js');
 
 const showOptions = function() {
   let msg = "Please select any one of the given options : "
-  let optionsMsg = "1.Play Game\n2.Check your stats\n3.quit\n"; 
+  let optionsMsg = "1.Play Game\n2.Check your stats\n\n"; 
 
   let selectedOption = readline.questionInt(msg + "\n" + optionsMsg);
 
   const options = {
     1 : playGame,
+    2 : displayStats
   };
 
   options[selectedOption]();
@@ -29,6 +30,25 @@ const showOptions = function() {
 const playGame = function() {
   game = retrieveGameData();
   startGame(game);
+};
+
+const displayStats = function() {
+  let name = readline.question("\nEnter you name : ");
+  let logData = readFile("./src/.log.json");
+  console.clear();
+
+  if(logData[name]) {
+    console.log("Player Name :", name);
+    console.log("Total games Played :", logData[name].gamesPlayed);
+    console.log("Won :", logData[name].gamesWon);
+    console.log("Draw :", logData[name].gamesDraw);
+    console.log("VS Bot :", logData[name].VSBot);
+    console.log("VS Player :", logData[name].VSPlayer);
+    return 1;
+  }
+  
+  console.log("No record found for this name");
+  return 0;
 };
 
 const retrieveGameData = function() {
