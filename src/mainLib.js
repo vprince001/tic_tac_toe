@@ -15,13 +15,14 @@ const { selectBanner } = require('./bannerLib.js');
 
 const showOptions = function() {
   let msg = "Please select any one of the given options : "
-  let optionsMsg = "1.Play Game\n2.Check your stats\n\n"; 
+  let optionsMsg = "1.Play Game\n2.Check your stats\n3.Exit\n\n"; 
 
   let selectedOption = readline.questionInt(msg + "\n" + optionsMsg);
 
   const options = {
     1 : playGame,
-    2 : displayStats
+    2 : displayStats,
+    3 : exitGame
   };
 
   options[selectedOption]();
@@ -49,6 +50,10 @@ const displayStats = function() {
   
   console.log("No record found for this name");
   return 0;
+};
+
+const exitGame = function() {
+  process.exit();
 };
 
 const retrieveGameData = function() {
