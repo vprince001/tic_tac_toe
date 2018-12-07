@@ -14,17 +14,16 @@ const {
 const { selectBanner } = require('./bannerLib.js');
 
 const initiateGame = function() {
-  let selectedOption = displayOptions();
+  console.clear();
+  let selectedOption = readSelectedOption();
   executeSelectedOption(selectedOption);
   return 1;
 };
 
-const displayOptions = function() {
-  console.clear();
+const readSelectedOption = function() {
   let msg = "Please select any one of the given options : "
   let optionsMsg = "1.Play Game\n2.Check your stats\n\n"; 
   let invalidMsg = "Valid inputs are 1, and 2 only, Please try again.\n";
-
   let selectedOption = readline.questionInt(msg + "\n" + optionsMsg);
   while(selectedOption < 1 || selectedOption > 2) {
     selectedOption = readline.questionInt(invalidMsg);
@@ -35,7 +34,7 @@ const displayOptions = function() {
 const executeSelectedOption = function(selectedOption) {
   const options = {
     1 : playGame,
-    2 : displayStats,
+    2 : displayStats
   };
 
   options[selectedOption]();

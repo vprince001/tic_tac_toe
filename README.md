@@ -15,3 +15,5 @@ Tic-tac-toe (also known as noughts and crosses or Xs and Os) is a paper-and-penc
 * Computer is choosing random blocks so defeating it should not be hard.
 
 Have fun!! :octocat:
+
+<img src="https://github.com/vprince001/tic_tac_toe/blob/master/images/tic_tac_toe.gif" alt="TIC-TAC-TOE" title="DEMO">
