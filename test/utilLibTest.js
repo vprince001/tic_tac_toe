@@ -2,6 +2,7 @@ const { equal, deepEqual } = require("assert");
 
 const { 
   changeFont, repeatString,
+  changeFontColor, changeFontStyle,
   createArray, createLine,
   assignSecondSymbol
 } = require("../src/utilLib.js");
@@ -37,15 +38,63 @@ describe("changeFont", function() {
   });
 
   it("should return bold text for b as third argument", function() {
-    equal(changeFont("red", "hello", "b"), "\033[1m\033[31mhello\033[0m");
+    equal(changeFont("red", "hello", "b"), "\033[1m\033[31mhello\033[0m\033[0m");
   });
 
   it("should return italic text for i as third argument", function() {
-    equal(changeFont("green", "hello", "i"), "\033[3m\033[32mhello\033[0m");
+    equal(changeFont("green", "hello", "i"), "\033[3m\033[32mhello\033[0m\033[0m");
   });
 
   it("should return underline text for u as third argument", function() {
-    equal(changeFont("yellow", "hello", "u"), "\033[4m\033[33mhello\033[0m");
+    equal(changeFont("yellow", "hello", "u"), "\033[4m\033[33mhello\033[0m\033[0m");
+  });
+
+});
+
+describe("changeFontColor", function() {
+
+  it("should return red text for red as first argument", function() {
+    equal(changeFontColor("red", "hello"), "\033[31mhello\033[0m");
+  });
+
+  it("should return green text for green as first argument", function() {
+    equal(changeFontColor("green", "hello"), "\033[32mhello\033[0m");
+  });
+
+  it("should return yellow text for yellow as first argument", function() {
+    equal(changeFontColor("yellow", "hello"), "\033[33mhello\033[0m");
+  });
+
+  it("should return blue text for blue as first argument", function() {
+    equal(changeFontColor("blue", "hello"), "\033[34mhello\033[0m");
+  });
+
+  it("should return violet text for violet as first argument", function() {
+    equal(changeFontColor("violet", "hello"), "\033[35mhello\033[0m");
+  });
+
+  it("should return cyan text for cyan as first argument", function() {
+    equal(changeFontColor("cyan", "hello"), "\033[36mhello\033[0m");
+  });
+
+  it("should return white text for white as first argument", function() {
+    equal(changeFontColor("white", "hello"), "\033[37mhello\033[0m");
+  });
+
+});
+
+describe("changeFontStyle", function() {
+
+  it("should return bold text for b as second argument", function() {
+    equal(changeFontStyle("hello", "b"), "\033[1mhello\033[0m");
+  });
+
+  it("should return italic text for i as second argument", function() {
+    equal(changeFontStyle("hello", "i"), "\033[3mhello\033[0m");
+  });
+
+  it("should return underline text for u as second argument", function() {
+    equal(changeFontStyle("hello", "u"), "\033[4mhello\033[0m");
   });
 
 });
