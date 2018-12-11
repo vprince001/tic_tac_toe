@@ -17,7 +17,25 @@ const initiateGame = function() {
   console.clear();
   let selectedOption = readSelectedOption();
   executeSelectedOption(selectedOption);
+
+  let menuAfterGame = {
+    "1" : playGame,
+    "2" : displayStats
+  }
+  let menuOption = showMenuAfterGame();
+  menuAfterGame[menuOption]();
   return 1;
+};
+
+const showMenuAfterGame = function() {
+  let msg = "\n1.Play again.\n2.Check stats.\n\n";
+  let invalidInputMsg = "Only two options are available 1 or 2.\n";
+  let selectedOption = readline.question(msg).toString();
+
+  while(selectedOption != "1" && selectedOption != "2") {
+    selectedOption = readline.questionInt(invalidInputMsg);
+  }
+  return selectedOption;
 };
 
 const readSelectedOption = function() {
@@ -25,6 +43,7 @@ const readSelectedOption = function() {
   let optionsMsg = "1.Play Game\n2.Check your stats\n\n"; 
   let invalidMsg = "Valid inputs are 1, and 2 only, Please try again.\n";
   let selectedOption = readline.questionInt(msg + "\n" + optionsMsg);
+
   while(selectedOption < 1 || selectedOption > 2) {
     selectedOption = readline.questionInt(invalidMsg);
   }
@@ -41,7 +60,7 @@ const executeSelectedOption = function(selectedOption) {
 };
 
 const playGame = function() {
-  game = retrieveGameData();
+  let game = retrieveGameData();
   startGame(game);
 };
 
