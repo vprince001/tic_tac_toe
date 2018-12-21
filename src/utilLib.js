@@ -2,40 +2,6 @@ const chalk = require("chalk");
 const readline = require("readline-sync");
 const fs = require("fs");
 
-//const changeFont = function(selectedColor, text, fontStyle) {
-//  let modifiedText = changeFontColor(selectedColor, text);
-//
-//  if (fontStyle) {
-//    modifiedText = changeFontStyle(modifiedText, fontStyle);
-//  }
-//
-//  return modifiedText;
-//};
-//
-//const changeFontColor = function(selectedColor, text) {
-//  let colors = {
-//    red: "\033[31m",
-//    green: "\033[32m",
-//    yellow: "\033[33m",
-//    blue: "\033[34m",
-//    violet: "\033[35m",
-//    cyan: "\033[36m",
-//    white: "\033[37m"
-//  };
-//
-//  return colors[selectedColor] + text + "\033[0m";
-//};
-//
-//const changeFontStyle = function(text, fontStyle) {
-//  let fontStyles = {
-//    b: "\033[1m",
-//    i: "\033[3m",
-//    u: "\033[4m"
-//  };
-//
-//  return fontStyles[fontStyle] + text + "\033[0m";
-//};
-//
 const repeatString = function(string, times) {
   return new Array(times).fill(string).join("");
 };
