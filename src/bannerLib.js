@@ -1,4 +1,5 @@
-const { changeFont, repeatString } = require("./utilLib.js");
+const chalk = require("chalk");
+const { repeatString } = require("./utilLib.js");
 
 const selectBanner = function() {
   let randomNumer = Math.ceil(Math.random() * 4);
@@ -14,14 +15,14 @@ const selectBanner = function() {
 };
 
 const generateBanner1 = function() {
-  let dashes = changeFont("violet", repeatString("≈", 21));
-  let l = changeFont("yellow", "|");
+  let dashes = chalk.magenta(repeatString("≈", 21));
+  let l = chalk.yellow("|");
   let borderLine = dashes + l;
   borderLine += repeatString(borderLine, 3);
   borderLine += dashes + "\n";
 
-  let specialName = changeFont("green", "¥  †¡ç - †åç - †ø£  ¥");
-  let simpleName = changeFont("red", "¥  TIC - TAC - TOE  ¥");
+  let specialName = chalk.green("¥  †¡ç - †åç - †ø£  ¥");
+  let simpleName = chalk.red("¥  TIC - TAC - TOE  ¥");
 
   let nameLine = specialName + l + simpleName + l;
   nameLine += nameLine + specialName + "\n";
@@ -51,10 +52,10 @@ const getBanner = function(lines) {
 };
 
 const generateBanner2 = function() {
-  let tic = changeFont("red", "   | T | I | C |   ");
-  let tac = changeFont("red", "   | T | A | C |   ");
-  let toe = changeFont("red", "   | T | O | E |   ");
-  let border = changeFont("yellow", "   +---+---+---+   ");
+  let tic = chalk.red("   | T | I | C |   ");
+  let tac = chalk.red("   | T | A | C |   ");
+  let toe = chalk.red("   | T | O | E |   ");
+  let border = chalk.yellow("   +---+---+---+   ");
 
   let lines = createLines(tic, tac, toe, border);
   let banner = getBanner(lines);
@@ -62,10 +63,10 @@ const generateBanner2 = function() {
 };
 
 const generateBanner3 = function() {
-  let tic = changeFont("yellow", "   | t | i | c |   ");
-  let tac = changeFont("yellow", "   | t | a | c |   ");
-  let toe = changeFont("yellow", "   | t | o | e |   ");
-  let border = changeFont("green", "   +---+---+---+   ");
+  let tic = chalk.yellow("   | t | i | c |   ");
+  let tac = chalk.yellow("   | t | a | c |   ");
+  let toe = chalk.yellow("   | t | o | e |   ");
+  let border = chalk.green("   +---+---+---+   ");
 
   let lines = createLines(tic, tac, toe, border);
   let banner = getBanner(lines);
@@ -73,10 +74,10 @@ const generateBanner3 = function() {
 };
 
 const generateBanner4 = function() {
-  let tic = changeFont("green", "   | † | ¡ | ç |   ");
-  let tac = changeFont("green", "   | † | å | ç |   ");
-  let toe = changeFont("green", "   | † | ø | ç |   ");
-  let border = changeFont("red", "   +---+---+---+   ");
+  let tic = chalk.green("   | † | ¡ | ç |   ");
+  let tac = chalk.green("   | † | å | ç |   ");
+  let toe = chalk.green("   | † | ø | ç |   ");
+  let border = chalk.red("   +---+---+---+   ");
 
   let lines = createLines(tic, tac, toe, border);
   let banner = getBanner(lines);

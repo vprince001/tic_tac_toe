@@ -1,8 +1,7 @@
 const readline = require("readline-sync");
+const chalk = require("chalk");
 
 const {
-  changeFont,
-  changeFontStyle,
   repeatString,
   createArray,
   createLine,
@@ -94,10 +93,10 @@ const retrieveGameData = function() {
   game.players = { player1: {}, player2: {} };
 
   let player1Name = readFirstName(game.gameMode);
-  game.players.player1.name = changeFont("blue", player1Name);
+  game.players.player1.name = chalk.blue(player1Name);
 
   let player2Name = readSecondName(game.gameMode);
-  game.players.player2.name = changeFont("green", player2Name);
+  game.players.player2.name = chalk.green(player2Name);
 
   game.players.player1.symbol = readFirstSymbol(game.players.player1.name);
   game.players.player2.symbol = assignSecondSymbol(game.players.player1.symbol);
@@ -143,7 +142,7 @@ const createBoard = function(boardData) {
   let firstLine = createLine(spaces, boardData[1], boardData[2], boardData[3]);
   let secondLine = createLine(spaces, boardData[4], boardData[5], boardData[6]);
   let thirdLine = createLine(spaces, boardData[7], boardData[8], boardData[9]);
-  let border = spaces + changeFont("violet", "+---+---+---+") + "\n";
+  let border = spaces + chalk.magenta("+---+---+---+") + "\n";
 
   let board =
     border + firstLine + border + secondLine + border + thirdLine + border;
@@ -163,7 +162,7 @@ const startGame = function(game) {
     let symbol = game.players[game.turn].symbol;
     let executeMove = executePlayerMove;
 
-    if (name == changeFont("green", "Computer")) {
+    if (name == chalk.green("Computer")) {
       executeMove = executeBotMove;
     }
 
@@ -187,7 +186,7 @@ const startGame = function(game) {
 };
 
 const removeColor = function(string) {
-  return string.slice(5, string.length - 4);
+  return string.slice(5, string.length - 5);
 };
 
 const executePlayerMove = function(game, name, symbol, turn) {
@@ -240,16 +239,16 @@ const checkWin = function(playerInputs) {
 };
 
 const declareWinner = function(name, frame, banner) {
-  let starLine = changeFont("violet", repeatString("*", 37));
-  let winMsg = changeFont("red", "won the game !");
-  name = changeFontStyle(name, "u");
+  let starLine = chalk.magenta(repeatString("*", 37));
+  let winMsg = chalk.red("won the game !");
+  name = chalk.underline(name);
   console.log(starLine, name, winMsg, starLine);
   return 10;
 };
 
 const declareDraw = function(frame, banner) {
-  let starLine = changeFont("violet", repeatString("*", 42));
-  let drawMsg = changeFont("green", " IT'S A DRAW ");
+  let starLine = chalk.magenta(repeatString("*", 42));
+  let drawMsg = chalk.green(" IT'S A DRAW ");
   let msg = starLine + drawMsg + starLine;
 
   console.log(msg);
