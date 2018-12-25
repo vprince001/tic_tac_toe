@@ -1,4 +1,4 @@
-const chalk = require("chalk");
+const colors = require("colors");
 const readline = require("readline-sync");
 const fs = require("fs");
 
@@ -12,10 +12,10 @@ const createArray = function(size, character) {
 
 const createLine = function(spaces, first, second, third) {
   let line = spaces;
-  line += chalk.magenta("| ") + first;
-  line += chalk.magenta(" | ") + second;
-  line += chalk.magenta(" | ") + third;
-  line += chalk.magenta(" |") + "\n";
+  line += colors.magenta("| ") + first;
+  line += colors.magenta(" | ") + second;
+  line += colors.magenta(" | ") + third;
+  line += colors.magenta(" |") + "\n";
 
   return line;
 };
@@ -63,14 +63,14 @@ const readFirstSymbol = function(player1Name) {
       "\n" + player1Name + ", " + msgForInvalidSymbol
     );
   }
-  return chalk.red(firstSymbol);
+  return colors.red(firstSymbol);
 };
 
 const assignSecondSymbol = function(firstSymbol) {
-  let secondSymbol = chalk.yellow("o");
+  let secondSymbol = colors.yellow("o");
 
-  if (firstSymbol == chalk.red("o")) {
-    secondSymbol = chalk.yellow("x");
+  if (firstSymbol == colors.red("o")) {
+    secondSymbol = colors.yellow("x");
   }
   return secondSymbol;
 };

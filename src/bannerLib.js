@@ -1,4 +1,3 @@
-const chalk = require("chalk");
 const colors = require("colors");
 const { repeatString } = require("./utilLib.js");
 
@@ -17,14 +16,14 @@ const selectBanner = function() {
 };
 
 const generateBanner1 = function() {
-  let dashes = chalk.magenta(repeatString("≈", 21));
-  let l = chalk.yellow("|");
+  let dashes = colors.magenta(repeatString("≈", 21));
+  let l = colors.yellow("|");
   let borderLine = dashes + l;
   borderLine += repeatString(borderLine, 3);
   borderLine += dashes + "\n";
 
-  let specialName = chalk.green("¥  †¡ç - †åç - †ø£  ¥");
-  let simpleName = chalk.red("¥  TIC - TAC - TOE  ¥");
+  let specialName = colors.green("¥  †¡ç - †åç - †ø£  ¥");
+  let simpleName = colors.red("¥  TIC - TAC - TOE  ¥");
 
   let nameLine = specialName + l + simpleName + l;
   nameLine += nameLine + specialName + "\n";
@@ -54,10 +53,10 @@ const getBanner = function(lines) {
 };
 
 const generateBanner2 = function() {
-  let tic = chalk.red("   | T | I | C |   ");
-  let tac = chalk.red("   | T | A | C |   ");
-  let toe = chalk.red("   | T | O | E |   ");
-  let border = chalk.yellow("   +---+---+---+   ");
+  let tic = colors.red("   | T | I | C |   ");
+  let tac = colors.red("   | T | A | C |   ");
+  let toe = colors.red("   | T | O | E |   ");
+  let border = colors.yellow("   +---+---+---+   ");
 
   let lines = createLines(tic, tac, toe, border);
   let banner = getBanner(lines);
@@ -65,10 +64,10 @@ const generateBanner2 = function() {
 };
 
 const generateBanner3 = function() {
-  let tic = chalk.yellow("   | t | i | c |   ");
-  let tac = chalk.yellow("   | t | a | c |   ");
-  let toe = chalk.yellow("   | t | o | e |   ");
-  let border = chalk.green("   +---+---+---+   ");
+  let tic = colors.yellow("   | t | i | c |   ");
+  let tac = colors.yellow("   | t | a | c |   ");
+  let toe = colors.yellow("   | t | o | e |   ");
+  let border = colors.green("   +---+---+---+   ");
 
   let lines = createLines(tic, tac, toe, border);
   let banner = getBanner(lines);
@@ -76,10 +75,10 @@ const generateBanner3 = function() {
 };
 
 const generateBanner4 = function() {
-  let tic = chalk.green("   | † | ¡ | ç |   ");
-  let tac = chalk.green("   | † | å | ç |   ");
-  let toe = chalk.green("   | † | ø | ç |   ");
-  let border = chalk.red("   +---+---+---+   ");
+  let tic = colors.green("   | † | ¡ | ç |   ");
+  let tac = colors.green("   | † | å | ç |   ");
+  let toe = colors.green("   | † | ø | ç |   ");
+  let border = colors.red("   +---+---+---+   ");
 
   let lines = createLines(tic, tac, toe, border);
   let banner = getBanner(lines);
