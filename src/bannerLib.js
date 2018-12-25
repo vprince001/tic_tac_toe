@@ -1,4 +1,5 @@
 const chalk = require("chalk");
+const colors = require("colors");
 const { repeatString } = require("./utilLib.js");
 
 const selectBanner = function() {
@@ -8,7 +9,8 @@ const selectBanner = function() {
     1: generateBanner1(),
     2: generateBanner2(),
     3: generateBanner3(),
-    4: generateBanner4()
+    4: generateBanner4(),
+    5: generateBanner5()
   };
 
   return banner[randomNumer];
@@ -82,6 +84,17 @@ const generateBanner4 = function() {
   let lines = createLines(tic, tac, toe, border);
   let banner = getBanner(lines);
   return banner;
+};
+
+const generateBanner5 = function() {
+  let tic = "   | † | ¡ | ç |   ";
+  let tac = "   | † | å | ç |   ";
+  let toe = "   | † | ø | ç |   ";
+  let border = "   +---+---+---+   ";
+
+  let lines = createLines(tic, tac, toe, border);
+  let banner = getBanner(lines);
+  return colors.rainbow(banner);
 };
 
 module.exports = { selectBanner };
