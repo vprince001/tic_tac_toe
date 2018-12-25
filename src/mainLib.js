@@ -29,6 +29,7 @@ const updateScreen = function(frame) {
 
 const initiateGame = function() {
   console.clear();
+  console.log(selectBanner());
   let selectedOption = readSelectedOption();
   executeSelectedOption(selectedOption);
   readline.question("\n\n\nPress enter to return to the main menu");
@@ -67,6 +68,7 @@ const displayStats = function() {
   name = name.toUpperCase();
   let logData = readFile("./src/.log.json");
   console.clear();
+  console.log(selectBanner());
 
   if (logData[name]) {
     console.log("Player Name :", name);
