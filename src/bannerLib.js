@@ -2,7 +2,7 @@ const colors = require("colors");
 const { repeatString } = require("./utilLib.js");
 
 const selectBanner = function() {
-  let randomNumer = Math.ceil(Math.random() * 4);
+  let randomNumer = Math.ceil(Math.random() * 5);
 
   let banner = {
     1: generateBanner1(),

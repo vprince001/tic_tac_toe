@@ -12,7 +12,6 @@ const {
   readFirstSymbol,
   assignSecondSymbol,
   switchTurn,
-  updateScreen,
   isBlockFree,
   isSubset,
   readFile,
@@ -21,6 +20,12 @@ const {
 } = require("./utilLib.js");
 
 const { selectBanner } = require("./bannerLib.js");
+
+const updateScreen = function(frame) {
+  console.clear();
+  console.log(selectBanner());
+  console.log(frame);
+};
 
 const initiateGame = function() {
   console.clear();
@@ -82,12 +87,12 @@ const exit = function() {
 };
 
 const retrieveGameData = function() {
-  let game = { banner: selectBanner() };
+  let game = {};
 
   game = retrieveBoard(game);
 
   console.clear();
-  console.log(game.banner);
+  console.log(selectBanner());
   game.gameMode = readGameModeInput();
 
   game.players = { player1: {}, player2: {} };
@@ -155,7 +160,7 @@ const startGame = function(game) {
 
   game.turn = "player1";
   let switchPlayer = switchTurn();
-  updateScreen(game.banner, game.board.frame);
+  updateScreen(game.board.frame);
 
   for (let currentMove = 1; currentMove < 10; currentMove++) {
     let name = game.players[game.turn].name;
@@ -169,13 +174,13 @@ const startGame = function(game) {
     game = executeMove(game, name, symbol, game.turn);
 
     if (checkWin(game.players[game.turn].inputs)) {
-      currentMove = declareWinner(name, game.board.frame, game.banner);
+      currentMove = declareWinner(name, game.board.frame);
       name = removeColor(name).toUpperCase();
       logData[name].gamesWon += 1;
     }
 
     if (currentMove == 9) {
-      declareDraw(game.board.frame, game.banner);
+      declareDraw(game.board.frame);
       name = removeColor(name).toUpperCase();
       logData[name].gamesDraw += 1;
     }
@@ -198,7 +203,7 @@ const executePlayerMove = function(game, name, symbol, turn) {
   }
 
   insertSymbol(game, turn, symbol, input);
-  updateScreen(game.banner, game.board.frame);
+  updateScreen(game.board.frame);
   return game;
 };
 
@@ -217,7 +222,7 @@ const executeBotMove = function(game, name, symbol, turn) {
 
   insertSymbol(game, turn, symbol, input);
 
-  updateScreen(game.banner, game.board.frame);
+  updateScreen(game.board.frame);
   console.log(name + " input is " + input + ".");
   return game;
 };
@@ -238,7 +243,7 @@ const checkWin = function(playerInputs) {
   });
 };
 
-const declareWinner = function(name, frame, banner) {
+const declareWinner = function(name, frame) {
   let starLine = colors.magenta(repeatString("*", 37));
   let winMsg = colors.red("won the game !");
   name = colors.underline(name);
@@ -246,7 +251,7 @@ const declareWinner = function(name, frame, banner) {
   return 10;
 };
 
-const declareDraw = function(frame, banner) {
+const declareDraw = function(frame) {
   let starLine = colors.magenta(repeatString("*", 42));
   let drawMsg = colors.green(" IT'S A DRAW ");
   let msg = starLine + drawMsg + starLine;

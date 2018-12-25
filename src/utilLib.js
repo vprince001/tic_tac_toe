@@ -85,11 +85,11 @@ const switchTurn = function() {
   };
 };
 
-const updateScreen = function(banner, frame) {
-  console.clear();
-  console.log(banner);
-  console.log(frame);
-};
+//const updateScreen = function(banner, frame) {
+//  console.clear();
+//  console.log(banner);
+//  console.log(frame);
+//};
 
 const readPlayerInput = function(name, symbol) {
   let msgForInput = "Enter number between 1 to 9\n";
@@ -155,7 +155,6 @@ module.exports = {
   readFirstSymbol,
   assignSecondSymbol,
   switchTurn,
-  updateScreen,
   readPlayerInput,
   isBlockFree,
   readFile,
